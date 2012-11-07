@@ -1,0 +1,22 @@
+<div class="center hero-unit">
+  <h1>Personalized Learning</h1>
+
+  <h2>
+    This is the website for the experiment run by Donghee and Adrien
+    at KAIST, 2012
+  </h2>
+
+</div>
+
+
+<h1>Login</h1>
+
+<div class="row">
+  <div class="span6 offset3">
+    <%= form_for(:session, url: sessions_path) do |f| %>
+      <%= f.label :login %>
+      <%= f.text_field :login %>
+      <%= f.submit "Sign in", class: "btn btn-large btn-primary" %>
+    <% end %>
+  </div>
+</div>

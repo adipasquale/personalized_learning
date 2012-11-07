@@ -1,0 +1,17 @@
+<header class="navbar navbar-fixed-top">
+  <div class="navbar-inner">
+    <div class="container">
+      <%= link_to "Personalized Learning", root_path, id: "logo" %>
+      <nav>
+        <ul class="nav pull-right">
+          <% if signed_in? %>
+            <% if !current_user.is_admin? %>
+              <li><%= link_to "Tasks",    tasks_path %></li>
+            <% end %>
+            <li><%= link_to "Sign out", signout_path, method: "delete" %></li>
+          <% end %>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</header>
