@@ -18,8 +18,17 @@ module SessionsHelper
     @current_user ||= User.find_by_remember_token(cookies[:remember_token])
   end
 
+  def correct_user
+    @user = User.find(params[:id])
+    redirect_to(root_path) unless current_user == @user
+  end
+
   def signed_in?
     !current_user.nil?
+  end
+
+  def user_signed_in
+    redirect_to signin_url, notice: "Please sign in to access this page." unless signed_in?
   end
 
   def admin_user

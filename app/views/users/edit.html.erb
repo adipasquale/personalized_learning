@@ -1,0 +1,21 @@
+<h1>My Profile</h1>
+
+<%= form_for @user do |f| %>
+
+  <%= render 'shared/error_messages', {object: @user} %>
+
+  <%= f.fields_for :user_traits do |ff| %>
+
+    <% if ff.object.options.empty? %>
+      <%= ff.label :value, ff.object.name %>
+      <%= ff.text_field :value %>
+    <% else %>
+      <%= ff.label :option_id, ff.object.name %>
+      <%= ff.collection_select :option_id, ff.object.options, :id, :value %>
+    <% end %>
+
+  <% end %>
+
+  <%= f.submit "Update", class: "btn btn-large btn-primary" %>
+
+<% end %>

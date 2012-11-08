@@ -1,5 +1,9 @@
+include UserTraitsHelper
+
 class UsersController < ApplicationController
-  before_filter :admin_user
+  before_filter :admin_user, only: [:index, :new, :create, :show, :destroy]
+  before_filter :user_signed_in, only: [:edit, :update]
+  before_filter :correct_user, only: [:edit, :update]
 
   def new
     @user = User.new
@@ -27,6 +31,20 @@ class UsersController < ApplicationController
 
   def index
     @users = User.where("is_admin IS NULL") # todo: very dirty !
+  end
+
+  def edit
+    fill_user_traits @user
+  end
+
+  def update
+    if @user.update_attributes(params[:user])
+      flash[:success] = "Profile updated"
+      sign_in @user
+      redirect_to edit_user_path(@user)
+    else
+      render :edit
+    end
   end
 
 end
