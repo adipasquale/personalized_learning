@@ -1,0 +1,12 @@
+<h1>Traits</h1>
+
+<ul>
+  <% @traits.each do |trait| %>
+    <li>
+      <%= trait.name %>
+      (<%= link_to "delete", trait, method: :delete,
+        data: { confirm: "You sure 100% ?" } %>)
+      </li>
+  <% end %>
+  <li> <%= link_to "New trait", new_trait_path %> </li>
+</ul>

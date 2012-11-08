@@ -3,6 +3,7 @@ PersonalizedLearning::Application.routes.draw do
   resources :users
   resources :sessions, only: [:new, :create, :destroy]
   resources :tasks
+  resources :traits, only: [:index, :new, :create, :destroy]
 
   root :to => 'sessions#new'
 
