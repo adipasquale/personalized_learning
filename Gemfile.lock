@@ -105,7 +105,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  bootstrap-sass (= 2.0.4)
+  bootstrap-sass
   coffee-rails (~> 3.2.1)
   jquery-rails
   pg (= 0.12.2)
