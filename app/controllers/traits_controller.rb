@@ -7,6 +7,7 @@ class TraitsController < ApplicationController
 
   def new
     @trait = Trait.new
+    6.times { @trait.options.build }
   end
 
   def create

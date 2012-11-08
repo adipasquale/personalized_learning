@@ -4,6 +4,7 @@
   <% @traits.each do |trait| %>
     <li>
       <%= trait.name %>
+      <%= "[#{trait.options.pluck(:value).join(", ")}]" unless trait.options.empty? %>
       (<%= link_to "delete", trait, method: :delete,
         data: { confirm: "You sure 100% ?" } %>)
       </li>

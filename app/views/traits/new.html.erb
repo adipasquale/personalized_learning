@@ -2,7 +2,22 @@
 
 <%= form_for(@trait) do |f| %>
   <%= render 'shared/error_messages', {object: @trait} %>
+
   <%= f.label :name %>
   <%= f.text_field :name %>
+
+  <fieldset>
+    <legend>Options</legend>
+
+    <%= f.fields_for :options do |opt_f| %>
+        <%= opt_f.text_field :value %>
+
+        <% if !opt_f.object.new_record? %>
+          <%= opt_f.label :_destroy, "Remove" %>
+          <%= opt_f.check_box :_destroy %>
+        <% end %>
+    <% end %>
+  </fieldset>
+
   <%= f.submit "Create", class: "btn btn-large btn-primary" %>
 <% end %>
