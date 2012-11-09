@@ -1,0 +1,14 @@
+<h1><%= @task.new_record? ? "New Task" : "Edit task" %></h1>
+
+<%= form_for(@task) do |f| %>
+  <%= render 'shared/error_messages', {object: @task} %>
+
+  <%= f.label :name %>
+  <%= f.text_field :name %>
+
+  <%= f.label :material %>
+  <%= f.text_area :material %>
+
+  <%= f.submit( (@task.new_record? ? "Create" : "Update"),
+    :class => "btn btn-large btn-primary") %>
+<% end %>

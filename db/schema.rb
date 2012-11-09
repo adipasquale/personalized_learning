@@ -11,11 +11,18 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121108104633) do
+ActiveRecord::Schema.define(:version => 20121109052759) do
 
   create_table "options", :force => true do |t|
     t.string   "value"
     t.integer  "trait_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "tasks", :force => true do |t|
+    t.string   "name"
+    t.text     "material"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end

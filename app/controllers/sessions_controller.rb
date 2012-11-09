@@ -1,7 +1,10 @@
 class SessionsController < ApplicationController
 
   def new
-    redirect_to tasks_path if signed_in?
+    if signed_in?
+      path = current_user.is_admin? ? admin_path : tasks_path
+      redirect_to path
+    end
   end
 
   def create

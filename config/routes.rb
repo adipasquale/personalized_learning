@@ -1,9 +1,9 @@
 PersonalizedLearning::Application.routes.draw do
 
-  resources :users
+  resources :users, only: [:new, :show, :create, :destroy, :edit, :update]
   resources :sessions, only: [:new, :create, :destroy]
   resources :tasks
-  resources :traits, only: [:index, :new, :create, :destroy]
+  resources :traits, only: [:new, :edit, :update, :create, :destroy]
 
   root :to => 'sessions#new'
 

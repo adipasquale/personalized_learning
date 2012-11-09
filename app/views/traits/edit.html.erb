@@ -1,4 +1,4 @@
-<h1>New Trait</h1>
+<h1><%= @trait.new_record? ? "New trait" : "Edit trait" %></h1>
 
 <%= form_for(@trait) do |f| %>
   <%= render 'shared/error_messages', {object: @trait} %>
@@ -19,5 +19,6 @@
     <% end %>
   </fieldset>
 
-  <%= f.submit "Create", class: "btn btn-large btn-primary" %>
+  <%= f.submit( (@trait.new_record? ? "Create" : "Update"),
+    :class => "btn btn-large btn-primary") %>
 <% end %>

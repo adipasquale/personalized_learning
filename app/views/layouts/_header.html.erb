@@ -6,17 +6,22 @@
         Personalized Learning
       </a>
       <nav>
-        <ul class="nav pull-right">
-          <% if signed_in? %>
-            <% if current_user.is_admin? %>
-              <li><%= link_to "Admin",    admin_path %></li>
-            <% else %>
-              <li><%= link_to "Tasks",    tasks_path %></li>
-              <li><%= link_to "My Profile", edit_user_path(current_user) %></li>
-            <% end %>
-            <li><%= link_to "Sign out", signout_path, method: "delete" %></li>
-          <% end %>
-        </ul>
+        <% if signed_in? %>
+          <ul class="nav pull-right">
+              <% if current_user.is_admin? %>
+                <li><%= link_to "Admin",    admin_path %></li>
+              <% else %>
+                <li><%= link_to "Tasks",    tasks_path %></li>
+                <li><%= link_to "My Profile", edit_user_path(current_user) %></li>
+              <% end %>
+              <li><%= link_to "Sign out", signout_path, method: "delete" %></li>
+          </ul>
+          <p class="navbar-text pull-right">Hello
+            <span class="user_login">
+              <%= current_user.login %> <%= " (admin)" if current_user.is_admin? %>
+            </span>
+          </p>
+        <% end %>
       </nav>
     </div>
   </div>

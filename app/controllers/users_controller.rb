@@ -1,7 +1,7 @@
 include UserTraitsHelper
 
 class UsersController < ApplicationController
-  before_filter :admin_user, only: [:index, :new, :create, :show, :destroy]
+  before_filter :admin_user, only: [:new, :create, :show, :destroy]
   before_filter :user_signed_in, only: [:edit, :update]
   before_filter :correct_user, only: [:edit, :update]
 
@@ -26,11 +26,7 @@ class UsersController < ApplicationController
   def destroy
     User.find(params[:id]).destroy
     flash[:success] = "User destroyed."
-    redirect_to users_url
-  end
-
-  def index
-    @users = User.where("is_admin IS NULL") # todo: very dirty !
+    redirect_to admin_path
   end
 
   def edit
