@@ -10,15 +10,18 @@
     <legend>Options</legend>
 
     <%= f.fields_for :options do |opt_f| %>
+      <div>
         <%= opt_f.text_field :value %>
-
         <% if !opt_f.object.new_record? %>
-          <%= opt_f.label :_destroy, "Remove" %>
           <%= opt_f.check_box :_destroy %>
+          <span class="help-inline">Destroy</span>
         <% end %>
+      </div>
     <% end %>
   </fieldset>
 
-  <%= f.submit( (@trait.new_record? ? "Create" : "Update"),
-    :class => "btn btn-large btn-primary") %>
+  <div>
+    <%= f.submit( (@trait.new_record? ? "Create" : "Update"),
+      :class => "btn btn-large btn-primary") %>
+  </div>
 <% end %>

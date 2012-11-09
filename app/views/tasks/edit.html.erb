@@ -9,6 +9,8 @@
   <%= f.label :material %>
   <%= f.text_area :material %>
 
-  <%= f.submit( (@task.new_record? ? "Create" : "Update"),
-    :class => "btn btn-large btn-primary") %>
+  <div>
+    <%= f.submit( (@task.new_record? ? "Create" : "Update"),
+      :class => "btn btn-large btn-primary") %>
+  </div>
 <% end %>
