@@ -9,4 +9,8 @@ class Trait < ActiveRecord::Base
 
   accepts_nested_attributes_for :options, :reject_if => lambda { |o| o[:value].blank? }, :allow_destroy => true
 
+  def self.with_options
+    Trait.all.reject { |trait| trait.options.empty?}
+  end
+
 end

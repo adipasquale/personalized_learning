@@ -11,7 +11,15 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121109052759) do
+ActiveRecord::Schema.define(:version => 20121111014448) do
+
+  create_table "introns", :force => true do |t|
+    t.string   "slug"
+    t.integer  "trait_id"
+    t.integer  "task_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "options", :force => true do |t|
     t.string   "value"
@@ -51,5 +59,13 @@ ActiveRecord::Schema.define(:version => 20121109052759) do
   end
 
   add_index "users", ["remember_token"], :name => "index_users_on_remember_token"
+
+  create_table "variations", :force => true do |t|
+    t.string   "content"
+    t.integer  "intron_id"
+    t.integer  "option_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
 end
