@@ -12,11 +12,22 @@ class TasksController < ApplicationController
 
   def new
     @task = Task.new
+    6.times do
+      question = @task.questions.build
+      6.times { question.choices.build }
+    end
     render :edit
   end
 
   def edit
     @task = Task.find params[:id]
+    @task.questions.each do |question|
+      (6 - question.choices.count).times { question.choices.build }
+    end
+    (6 - @task.questions.count).times do
+      question = @task.questions.build
+      6.times { question.choices.build }
+    end
   end
 
   def update

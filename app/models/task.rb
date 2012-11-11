@@ -1,12 +1,14 @@
 class Task < ActiveRecord::Base
-  attr_accessible :material, :name, :introns_attributes
+  attr_accessible :material, :name, :introns_attributes, :questions_attributes
 
   validates :name, presence: true
   validates :material, presence: true
 
   has_many :introns, dependent: :destroy
-
   accepts_nested_attributes_for :introns, :allow_destroy => true
+
+  has_many :questions, dependent: :destroy
+  accepts_nested_attributes_for :questions, :reject_if => lambda { |o| o[:text].blank? }, :allow_destroy => true
 
   validate :matching_introns
 

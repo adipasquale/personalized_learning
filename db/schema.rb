@@ -11,7 +11,15 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121111014448) do
+ActiveRecord::Schema.define(:version => 20121111033051) do
+
+  create_table "choices", :force => true do |t|
+    t.integer  "question_id"
+    t.boolean  "right"
+    t.string   "text"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
 
   create_table "introns", :force => true do |t|
     t.string   "slug"
@@ -24,6 +32,13 @@ ActiveRecord::Schema.define(:version => 20121111014448) do
   create_table "options", :force => true do |t|
     t.string   "value"
     t.integer  "trait_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "questions", :force => true do |t|
+    t.integer  "task_id"
+    t.string   "text"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end

@@ -28,8 +28,27 @@
             <%= variation_f.hidden_field :option_id %>
           <% end %>
         </div>
-
       </div>
+    <% end %>
+  </fieldset>
+
+  <fieldset id="questions">
+    <legend>Questions</legend>
+    <%= f.fields_for :questions do |question_f| %>
+      <%= question_f.label :text, "question text" %>
+      <%= question_f.text_field :text %>
+      <% if !question_f.object.new_record? %>
+        <%= question_f.check_box :_destroy %>
+        <span class="help-inline">Destroy</span>
+      <% end %>
+      <label>Choices</label>
+      <%= question_f.fields_for :choices do |choice_f| %>
+        <%= choice_f.text_field :text %>
+        <% if !choice_f.object.new_record? %>
+          <%= choice_f.check_box :_destroy %>
+          <span class="help-inline">Destroy</span>
+        <% end %>
+      <% end %>
     <% end %>
   </fieldset>
 

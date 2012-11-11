@@ -20,3 +20,10 @@ textarea#task_material{
 #hidden_introns{
   display: none;
 }
+
+fieldset#questions .question{
+  clear: both;
+  div{
+    float: left;
+  }
+}
