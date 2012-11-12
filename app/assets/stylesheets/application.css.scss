@@ -13,6 +13,7 @@
  */
 
 @import "bootstrap";
+@import "bootstrap-responsive";
 
 /* universal */
 
@@ -24,9 +25,6 @@ html {
   clear: both;
 }
 
-.navbar .container{
-  width: 940px;
-}
 .navbar-text .user_login{
   color: #FFF;
   font-weight: bold;

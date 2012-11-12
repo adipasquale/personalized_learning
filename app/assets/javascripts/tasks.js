@@ -21,7 +21,7 @@ $(document).ready(function(){
     introns_fieldset.find(".intron_slug").each( function(){
       var slug_idx = current_slugs.indexOf( $(this).val() );
       var intron_div = $(this).parents(".intron");
-      var destroy_checkbox = intron_div.children(".intron_destroy");
+      var destroy_checkbox = intron_div.find(".intron_destroy");
       if ( slug_idx == -1) {
         // if old records, check destroy, else move to hidden part
         if (destroy_checkbox.size() > 0) {
@@ -56,20 +56,19 @@ $(document).ready(function(){
         var prefix = "task_introns_attributes_" + introns_count;
 
         $("fieldset#introns").append(
-          "<div class='intron'>" +
-            "<label for='" + prefix + "_slug'>" +
-              slug +
-            "</label>" +
-            "<input class='intron_slug' " +
-              "id='" + prefix + "_slug' " +
-              "name='task[introns_attributes][" + introns_count + "][slug]' " +
-              " type='hidden' value='" + slug + "'>" +
-            "<select id='" + prefix + "_trait_id' class='intron_trait' " +
-              "name='task[introns_attributes][" + introns_count + "][trait_id]'>" +
-              trait_options_html +
-            "</select>" +
-            "<div class='variations'></div>" +
-            "</div>"
+          "<div class='intron row-fluid'>" +
+            "<div class='trait span3'>" +
+              "<label for='" + prefix + "_slug'>" + slug + "</label>" +
+              "<input class='intron_slug' id='" + prefix + "_slug' " +
+                "name='task[introns_attributes][" + introns_count + "][slug]' " +
+                " type='hidden' value='" + slug + "'>" +
+              "<select id='" + prefix + "_trait_id' class='intron_trait' " +
+                "name='task[introns_attributes][" + introns_count + "][trait_id]'>" +
+                trait_options_html +
+              "</select>" +
+            "</div>" +
+            "<div class='variations span6'></div>" +
+          "</div>"
         );
         introns_count++;
       }
@@ -100,7 +99,7 @@ $(document).ready(function(){
             "value='" + $(this).data('id') + "'/>";
           variation_count++;
       });
-      $(this).siblings(".variations").html( variations_html );
+      $(this).parent().siblings(".variations").html( variations_html );
     });
   };
 
