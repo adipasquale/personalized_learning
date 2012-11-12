@@ -12,6 +12,10 @@ class UserTrait < ActiveRecord::Base
 
   delegate :name, :options, to: :trait
 
+  def get_value
+    option.nil? ? value : option.value
+  end
+
   private
 
     def has_option_or_value

@@ -12,6 +12,13 @@ class Task < ActiveRecord::Base
 
   validate :matching_introns
 
+  def personalize_material user
+    introns.each do |intron|
+      val = user.user_traits.select{ |ut| ut.trait_id == intron.trait.id }.first.get_value
+      material.gsub!(/\$#{intron.slug}\$/, val)
+    end
+  end
+
   private
 
     def matching_introns

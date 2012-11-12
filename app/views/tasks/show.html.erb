@@ -1,7 +1,33 @@
 <h1>Task : <%= @task.name %></h1>
 
-<h2>Material</h2>
-
-<div class="task_material">
-  <%= @task.material.html_safe %>
+<div class="row-fluid">
+  <div class="task_material well span6">
+    <%= @task.material.html_safe %>
+  </div>
 </div>
+
+<%= form_for(current_user, url: answer_task_user_path(current_user)) do |f| %>
+  <div class="row-fluid">
+    <% @task.questions.each do |question| %>
+      <div class="span3">
+        <h3><%= question.text %></h3>
+        <% answers = current_user.answers.select{ |a| question.choices.pluck(:id).include? a.choice_id } %>
+        <%= f.fields_for :answers, answers do |answer_f| %>
+          <div>
+            <%= answer_f.hidden_field :choice_id %>
+            <%= answer_f.check_box :keep_or_create %>
+            <%= answer_f.object.choice.text %>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+
+<div class="row-fluid answer_task_submit">
+  <div class="span6">
+    <%= hidden_field :task, :id %>
+    <%= f.submit( "Submit", :class => "btn btn-large btn-primary") %>
+  </div>
+</div>
+
+<% end %>

@@ -1,5 +1,5 @@
 class TasksController < ApplicationController
-  before_filter :admin_user, only: [:new, :create, :show, :destroy]
+  before_filter :admin_user, only: [:new, :create, :destroy]
   before_filter :user_signed_in, only: [:index, :show]
 
   def index
@@ -8,6 +8,14 @@ class TasksController < ApplicationController
 
   def show
     @task = Task.find params[:id]
+    @task.personalize_material current_user
+    @task.questions.each do |question|
+      question.choices.each do |choice|
+        if current_user.answers.select{ |a| a.choice_id == choice.id}.empty?
+          current_user.answers.build choice_id: choice.id
+        end
+      end
+    end
   end
 
   def new

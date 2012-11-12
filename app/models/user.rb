@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  attr_accessible :is_admin, :login, :user_traits_attributes
+  attr_accessible :is_admin, :login, :user_traits_attributes, :answers_attributes
 
   before_save :create_remember_token
 
@@ -8,6 +8,9 @@ class User < ActiveRecord::Base
   validates :login, presence: true, uniqueness: true
 
   accepts_nested_attributes_for :user_traits
+
+  has_many :answers, dependent: :destroy
+  accepts_nested_attributes_for :answers, :allow_destroy => true
 
   private
 

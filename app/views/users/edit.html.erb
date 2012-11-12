@@ -1,21 +1,33 @@
 <h1>My Profile</h1>
 
-<%= form_for @user do |f| %>
+<div class="row-fluid">
+  <div class="span12">
+    <%= form_for(@user, :html => {:class => "form-horizontal"}) do |f| %>
 
-  <%= render 'shared/error_messages', {object: @user} %>
+      <%= render 'shared/error_messages', {object: @user} %>
 
-  <%= f.fields_for :user_traits do |ff| %>
+      <%= f.fields_for :user_traits do |ff| %>
+        <div class="control-group">
+          <% if ff.object.options.empty? %>
+            <%= ff.label :value, ff.object.name, :class => "control-label" %>
+            <div class="controls">
+              <%= ff.text_field :value %>
+            </div>
+          <% else %>
+            <%= ff.label :option_id, ff.object.name, :class => "control-label" %>
+            <div class="controls">
+              <%= ff.collection_select :option_id, ff.object.options, :id, :value %>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
 
-    <% if ff.object.options.empty? %>
-      <%= ff.label :value, ff.object.name %>
-      <%= ff.text_field :value %>
-    <% else %>
-      <%= ff.label :option_id, ff.object.name %>
-      <%= ff.collection_select :option_id, ff.object.options, :id, :value %>
+      <div class="control-group">
+        <div class="controls">
+          <%= f.submit "Update", class: "btn btn-large btn-primary" %>
+        </div>
+      </div>
+
     <% end %>
-
-  <% end %>
-
-  <%= f.submit "Update", class: "btn btn-large btn-primary" %>
-
-<% end %>
+  </div>
+</div>

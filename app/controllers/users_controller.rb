@@ -2,8 +2,8 @@ include UserTraitsHelper
 
 class UsersController < ApplicationController
   before_filter :admin_user, only: [:new, :create, :show, :destroy]
-  before_filter :user_signed_in, only: [:edit, :update]
-  before_filter :correct_user, only: [:edit, :update]
+  before_filter :user_signed_in, only: [:edit, :update, :answer_task]
+  before_filter :correct_user, only: [:edit, :update, :answer_task]
 
   def new
     @user = User.new
@@ -40,6 +40,27 @@ class UsersController < ApplicationController
       redirect_to edit_user_path(@user)
     else
       render :edit
+    end
+  end
+
+  def answer_task
+    @task = Task.find(params[:task][:id])
+    if @task.nil? or params[:user][:answers_attributes].nil?
+      redirect_to :back
+    else
+      params[:user][:answers_attributes].each do |id, answer|
+        if answer[:keep_or_create] == "0"
+          params[:user][:answers_attributes][id][:_destroy] = "1"
+        end
+        params[:user][:answers_attributes][id].delete :keep_or_create
+      end
+      if @user.update_attributes(params[:user])
+        flash[:success] = "Answer submitted"
+        sign_in @user
+        redirect_to tasks_path
+      else
+        render "tasks/show"
+      end
     end
   end
 

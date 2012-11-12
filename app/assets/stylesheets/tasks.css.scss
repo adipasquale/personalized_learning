@@ -2,17 +2,14 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-
-.task_material{
-  width: 600px;
-  margin: auto;
-  border: 1px solid black;
-}
-
 .intron_destroy{
   display: none;
 }
 
 #hidden_introns{
   display: none;
+}
+
+.row-fluid.answer_task_submit{
+  margin-top: 1em;
 }
