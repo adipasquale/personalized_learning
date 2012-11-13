@@ -45,6 +45,7 @@ class UsersController < ApplicationController
 
   def home
     @tasks = Task.all
+    @questionnaires = Questionnaire.all
   end
 
   def answer_task

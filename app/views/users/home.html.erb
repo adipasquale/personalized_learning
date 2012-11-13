@@ -17,4 +17,14 @@
       <% end %>
     </ul>
   </div>
+  <div class="span4">
+    <h2>Fill a questionnaire</h2>
+    <ul>
+      <% @questionnaires.each do |questionnaire| %>
+        <li>
+          <%= link_to questionnaire.name, questionnaire %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
 </div>

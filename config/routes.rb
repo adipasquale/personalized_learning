@@ -8,12 +8,13 @@ PersonalizedLearning::Application.routes.draw do
   resources :sessions, only: [:new, :create, :destroy]
   resources :tasks
   resources :traits, only: [:new, :edit, :update, :create, :destroy]
+  resources :questionnaires
 
   root :to => 'sessions#new'
 
   match '/home', to: "users#home"
   match '/signin',  to: 'sessions#new'
   match '/signout', to: 'sessions#destroy', via: :delete
-  match '/admin',   to: 'admin#index'
+  match '/admin',   to: 'admin#home'
 
 end
