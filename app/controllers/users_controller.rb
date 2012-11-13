@@ -2,7 +2,7 @@ include UserTraitsHelper
 
 class UsersController < ApplicationController
   before_filter :admin_user, only: [:new, :create, :show, :destroy]
-  before_filter :user_signed_in, only: [:edit, :update, :answer_task]
+  before_filter :user_signed_in, only: [:edit, :update, :answer_task, :home]
   before_filter :correct_user, only: [:edit, :update, :answer_task]
 
   def new
@@ -43,6 +43,10 @@ class UsersController < ApplicationController
     end
   end
 
+  def home
+    @tasks = Task.all
+  end
+
   def answer_task
     @task = Task.find(params[:task][:id])
     if @task.nil? or params[:user][:answers_attributes].nil?
@@ -57,7 +61,7 @@ class UsersController < ApplicationController
       if @user.update_attributes(params[:user])
         flash[:success] = "Answer submitted"
         sign_in @user
-        redirect_to tasks_path
+        redirect_to home_path
       else
         render "tasks/show"
       end

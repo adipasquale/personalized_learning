@@ -4,7 +4,7 @@ $(document).ready(function(){
   var current_slugs = [];
   var trait_options_html = $("select#prop_traits").html();
   var hidden_introns = $("#hidden_introns");
-  var introns_fieldset = $("fieldset#introns");
+  var introns_fieldset = $("#introns");
 
   $("textarea#task_material").change(function(){
     var new_current_slugs = [];
@@ -27,7 +27,7 @@ $(document).ready(function(){
         if (destroy_checkbox.size() > 0) {
           destroy_checkbox.attr("checked", "checked");
           intron_div.addClass("hide");
-        } else {
+        } else {
           intron_div.detach().appendTo(hidden_introns);
         }
       } else {
@@ -55,9 +55,9 @@ $(document).ready(function(){
       if (slug !== undefined) { // skip those deleted in previous step
         var prefix = "task_introns_attributes_" + introns_count;
 
-        $("fieldset#introns").append(
+        introns_fieldset.append(
           "<div class='intron row-fluid'>" +
-            "<div class='trait span3'>" +
+            "<div class='trait span6'>" +
               "<label for='" + prefix + "_slug'>" + slug + "</label>" +
               "<input class='intron_slug' id='" + prefix + "_slug' " +
                 "name='task[introns_attributes][" + introns_count + "][slug]' " +
@@ -76,11 +76,12 @@ $(document).ready(function(){
 
     rebindTraitSelects();
 
+    updatePreview(material);
+
   });
 
   var rebindTraitSelects = function(){
-    // $("fieldset#introns .intron_trait")
-    $("fieldset#introns select").change(function(){
+    introns_fieldset.find("select").change(function(){
       var variation_count = 0;
       var variations_html = "";
       var id_prefix = $(this).siblings(".intron_slug").attr('id').split("_slug")[0];
@@ -103,7 +104,42 @@ $(document).ready(function(){
     });
   };
 
+  // replaces material introns with testuser user_trait value or with the
+  // first variation content if the trait has options
+  var updatePreview = function(material){
+    if (material === undefined) material = $("textarea#task_material").val();
+    introns_fieldset.find(".intron:not(.hide)").each(function(){
+      var trait_id = $(this).find("select").val();
+      var intron_slug = $(this).find(".intron_slug").val();
+      var preview_value = window.preview_traits[parseInt(trait_id, 10)];
+      if ( preview_value === undefined) {
+        preview_value = $(this).find("input[type='text']:first").val();
+      }
+      if ( preview_value !== undefined) {
+        material = material.replace( new RegExp("\\$" + intron_slug + "\\$", 'g'), preview_value);
+      }
+    });
+    $(".task_material").html(material);
+  };
+
+  // Bind the Add question and choice buttons
+  $(".new_choice").click(function(){
+    var parent = $(this).closest(".choices");
+    parent.find(".choice_row.hide:first").removeClass("hide");
+    if( parent.find(".choice_row.hide").size() === 0 ) {
+      $(this).parent("div").remove();
+    }
+  });
+  $(".new_question").click(function(){
+    $(".question_row.hide:first").removeClass("hide");
+    if( $(".question_row.hide").size() === 0 ) {
+      $(this).parents(".row-fluid").detach();
+    }
+  });
+
   rebindTraitSelects();
-  $("fieldset#introns .intron:not(.with_initial_variations) select").change();
+  introns_fieldset.find(".intron:not(.with_initial_variations) select").change();
+
+  updatePreview();
 
 });

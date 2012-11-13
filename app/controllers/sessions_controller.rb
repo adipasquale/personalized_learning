@@ -2,7 +2,7 @@ class SessionsController < ApplicationController
 
   def new
     if signed_in?
-      path = current_user.is_admin? ? admin_path : tasks_path
+      path = current_user.is_admin? ? admin_path : home_path
       redirect_to path
     end
   end
@@ -11,7 +11,7 @@ class SessionsController < ApplicationController
     user = User.find_by_login(params[:session][:login])
     if user
       sign_in user
-      redirect_to (user.is_admin? ? admin_path : tasks_path)
+      redirect_to (user.is_admin? ? admin_path : home_path)
     else
       flash.now[:error] = 'Invalid email/password combination'
       render 'new'

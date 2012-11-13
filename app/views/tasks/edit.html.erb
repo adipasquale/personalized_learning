@@ -6,38 +6,60 @@
   <%= f.label :name %>
   <%= f.text_field :name %>
 
-  <%= f.label :material %>
-  <%= f.text_area :material, rows: 10, :class => "span6" %>
+  <div class="row-fluid">
+    <div class="span6">
+      <%= f.label :material %>
+      <%= f.text_area :material, rows: 10, :class => "span12" %>
+    </div>
+    <div class="span6">
+      <div class="task_material well"></div>
+    </div>
+  </div>
 
   <fieldset id="introns">
     <legend>Customizable parts</legend>
 
-    <%= f.fields_for :introns do |intron_f| %>
-      <div class="intron row-fluid <%= "with_initial_variations" if !intron_f.object.variations.empty? %>">
-        <div class='trait span3'>
-          <%= intron_f.label :trait_id, intron_f.object.slug %>
-          <%= intron_f.collection_select :trait_id, Trait.all, :id, :name, :class => "intron_trait" %>
+    <div class="row-fluid">
+      <div class="span6">
+        <%= f.fields_for :introns do |intron_f| %>
+          <div class="intron row-fluid <%= "with_initial_variations" if !intron_f.object.variations.empty? %>">
+            <div class='trait span6'>
+              <%= intron_f.label :trait_id, intron_f.object.slug %>
+              <%= intron_f.collection_select :trait_id, Trait.all, :id, :name, :class => "intron_trait" %>
 
-          <%= intron_f.hidden_field :id %>
-          <%= intron_f.hidden_field :slug, :class => "intron_slug" %>
-          <%= intron_f.check_box :_destroy, :class => "intron_destroy" %>
-        </div>
+              <%= intron_f.hidden_field :id %>
+              <%= intron_f.hidden_field :slug, :class => "intron_slug" %>
+              <%= intron_f.check_box :_destroy, :class => "intron_destroy" %>
+            </div>
 
-        <div class="variations span6">
-          <%= intron_f.fields_for :variations do |variation_f| %>
-            <%= variation_f.label :content, variation_f.object.option.value %>
-            <%= variation_f.text_field :content %>
-            <%= variation_f.hidden_field :option_id %>
-          <% end %>
+            <div class="variations span6">
+              <%= intron_f.fields_for :variations do |variation_f| %>
+                <%= variation_f.label :content, variation_f.object.option.value %>
+                <%= variation_f.text_field :content %>
+                <%= variation_f.hidden_field :option_id %>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+      <div class="span6">
+        <div class="alert alert-info">
+          The customizable parts will appear as you type in the material.
+          <br /><br />
+          For example if you type <b>$years_old$</b>, a form with the slug <b>years_old</b>
+          will appear letting you select the appropriate Trait, say <b>Age</b>
+          <br /><br />
+          To trigger processing of this form, please unfocus from the material
+          textarea, that is click anywhere else on the page
         </div>
       </div>
-    <% end %>
+    </div>
   </fieldset>
 
   <fieldset id="questions">
     <legend>Questions</legend>
     <%= f.fields_for :questions do |question_f| %>
-      <div class="row-fluid">
+      <div class="row-fluid question_row<%= ' hide' if question_f.object.new_record? %>">
         <div class="question span3">
           <%= question_f.label :text, "question text" %>
           <%= question_f.text_field :text %>
@@ -51,7 +73,7 @@
         <div class="choices span6">
           <label>Choices</label>
           <%= question_f.fields_for :choices do |choice_f| %>
-            <div>
+            <div class="choice_row<%= ' hide' if choice_f.object.new_record? %>">
               <%= choice_f.text_field :text %>
               <%= choice_f.check_box :right %>
               <span class="help-inline">Correct</span>
@@ -61,9 +83,17 @@
               <% end %>
             </div>
           <% end %>
+          <div>
+            <a href="javascript:void(0);" class="new_choice btn">Add a choice</a>
+          </div>
         </div>
       </div>
     <% end %>
+    <div class="row-fluid">
+      <div class="span3">
+        <a href="javascript:void(0);" class="new_question btn">Add a question</a>
+      </div>
+    </div>
   </fieldset>
 
   <div class="span6 offset3">
@@ -89,3 +119,7 @@
       <% end %>
     </div>
   </div>
+
+  <%= javascript_tag do %>
+    preview_traits = <%= raw @preview_traits.to_json %>
+  <% end %>

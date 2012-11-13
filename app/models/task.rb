@@ -12,10 +12,10 @@ class Task < ActiveRecord::Base
 
   validate :matching_introns
 
-  def personalize_material user
+  def personalize_material_for_user user
     introns.each do |intron|
-      val = user.user_traits.select{ |ut| ut.trait_id == intron.trait.id }.first.get_value
-      material.gsub!(/\$#{intron.slug}\$/, val)
+      val = intron.get_personalized_value_for_user user
+      material.gsub!(/\$#{intron.slug}\$/, val) unless val.nil?
     end
   end
 

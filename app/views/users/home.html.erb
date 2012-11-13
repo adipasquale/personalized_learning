@@ -1,0 +1,20 @@
+<h1>Home</h1>
+
+<div class="row-fluid">
+  <div class="span4">
+    <h2>Your settings</h2>
+    <ul>
+      <li><%= link_to "Edit my profile", edit_user_path(current_user) %></li>
+    </ul>
+  </div>
+  <div class="span4">
+    <h2>Perform a task</h2>
+    <ul>
+      <% @tasks.each do |task| %>
+        <li>
+          <%= link_to task.name, task %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</div>

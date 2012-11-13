@@ -11,6 +11,7 @@ PersonalizedLearning::Application.routes.draw do
 
   root :to => 'sessions#new'
 
+  match '/home', to: "users#home"
   match '/signin',  to: 'sessions#new'
   match '/signout', to: 'sessions#destroy', via: :delete
   match '/admin',   to: 'admin#index'

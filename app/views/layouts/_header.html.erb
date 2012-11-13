@@ -9,12 +9,20 @@
         <% if signed_in? %>
           <ul class="nav pull-right">
               <% if current_user.is_admin? %>
-                <li><%= link_to "Admin",    admin_path %></li>
+                <li><a href="<%= admin_path %>">
+                  <i class="icon-leaf icon-white"></i>Admin Home</a>
+                </li>
               <% else %>
-                <li><%= link_to "Tasks",    tasks_path %></li>
-                <li><%= link_to "My Profile", edit_user_path(current_user) %></li>
+                <li><a href="<%= home_path %>">
+                  <i class="icon-home icon-white"></i>My Home</a>
+                </li>
+                <li><a href="<%= edit_user_path(current_user) %>">
+                  <i class="icon-user icon-white"></i>My Profile</a>
+                </li>
               <% end %>
-              <li><%= link_to "Sign out", signout_path, method: "delete" %></li>
+              <li><a href="<%= signout_path %>" data-method="delete" rel="nofollow">
+                <i class="icon-off icon-white"></i>Sign out</a>
+              </li>
           </ul>
           <p class="navbar-text pull-right">Hello
             <span class="user_login">

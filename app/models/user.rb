@@ -12,6 +12,8 @@ class User < ActiveRecord::Base
   has_many :answers, dependent: :destroy
   accepts_nested_attributes_for :answers, :allow_destroy => true
 
+  scope :students, where(is_admin: [false, nil])
+
   private
 
     def create_remember_token

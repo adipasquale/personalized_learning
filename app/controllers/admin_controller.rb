@@ -2,7 +2,7 @@ class AdminController < ApplicationController
 
   def index
     @tasks = Task.all
-    @users = User.all
+    @users = User.students.all
     @traits = Trait.all
   end
 
