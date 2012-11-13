@@ -2,8 +2,11 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-.questionnaire_row .answer_box{
-  float: left;
-  min-width: 100px;
-  text-align: center;
+.questionnaire_row{
+  margin: 2em 0;
+  .answer_box{
+    float: left;
+    min-width: 11em;
+    text-align: center;
+  }
 }

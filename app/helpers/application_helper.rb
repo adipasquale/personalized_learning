@@ -15,15 +15,24 @@ module ApplicationHelper
     @answers = {} # this object is useful to keep answers order in sync with choices order
     object.questions.each do |question|
       @answers[question.id] = []
-      question.choices.each do |choice|
-        saved_answers = user.answers.select{ |a| a.choice_id == choice.id}
+      if question.choices.empty?
+        saved_answers = user.answers.select{ |a| a.question_id == question.id}
         if saved_answers.empty?
-          @answers[question.id].push user.answers.build choice_id: choice.id
+          @answers[question.id].push user.answers.build question_id: question.id
         else
           @answers[question.id].push saved_answers.first
         end
+      else
+        question.choices.each do |choice|
+          saved_answers = user.answers.select{ |a| a.choice_id == choice.id}
+          if saved_answers.empty?
+            @answers[question.id].push user.answers.build choice_id: choice.id
+          else
+            @answers[question.id].push saved_answers.first
+          end
+        end
+        user.answers.reorder(:choice_id)
       end
-      user.answers.reorder(:choice_id)
     end
   end
 

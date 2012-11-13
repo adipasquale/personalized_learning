@@ -6,14 +6,19 @@
       <div class="span12">
         <h3><%= question.text %></h3>
         <%= f.fields_for :answers, @answers[question.id] do |answer_f| %>
-          <div class="answer_box">
-            <%= answer_f.object.choice.text %>
-            <br />
-            <%= answer_f.check_box :keep_or_create %>
-            <br />
-            <%= answer_f.object.choice.label %>
-            <%= answer_f.hidden_field :choice_id %>
-          </div>
+          <% if question.choices.empty? %>
+            <%= answer_f.text_area :text, :class => "span6" %>
+            <%= answer_f.hidden_field :question_id %>
+          <% else %>
+            <div class="answer_box">
+              <%= answer_f.object.choice.text %>
+              <br />
+              <%= answer_f.check_box :keep_or_create %>
+              <br />
+              <%= answer_f.object.choice.label %>
+              <%= answer_f.hidden_field :choice_id %>
+            </div>
+          <% end %>
         <% end %>
       </div>
     </div>
