@@ -50,8 +50,10 @@
       <% @questionnaires.each do |questionnaire| %>
         <li><i class="icon-question-sign"></i>
           <%= link_to questionnaire.name, edit_questionnaire_path(questionnaire) %>
-          (<%= link_to "delete", questionnaire, method: :delete,
-            data: { confirm: "You sure 100% ?" } %>)
+          <a href="<%= questionnaire_path(questionnaire) %>"><i class="icon-eye-open"></i></a>
+          <a href="<%= questionnaire_path(questionnaire) %>"
+            data-confirm="Are you sure you want to delete this questionnaire ?"
+            data-method="delete" rel="nofollow"><i class="icon-remove"></i></a>
         </li>
       <% end %>
       <li> <a href="<%= new_questionnaire_path %>" class="btn">New questionnaire <i class="icon-question-sign"></i></a></li>

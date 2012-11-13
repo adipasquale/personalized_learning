@@ -1,7 +1,9 @@
 class Question < ActiveRecord::Base
-  attr_accessible :task_id, :text, :choices_attributes
+  attr_accessible :task_id, :questionnaire_id, :text, :choices_attributes
 
+  # belongs to either a task or a questionnaire
   belongs_to :task
+  belongs_to :questionnaire
 
   has_many :choices, dependent: :destroy
 

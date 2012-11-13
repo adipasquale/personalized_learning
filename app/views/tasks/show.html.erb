@@ -11,8 +11,7 @@
     <% @task.questions.each do |question| %>
       <div class="span3">
         <h3><%= question.text %></h3>
-        <% answers = current_user.answers.select{ |a| question.choices.pluck(:id).include? a.choice_id } %>
-        <%= f.fields_for :answers, answers do |answer_f| %>
+        <%= f.fields_for :answers, @answers[question.id] do |answer_f| %>
           <div>
             <%= answer_f.hidden_field :choice_id %>
             <%= answer_f.check_box :keep_or_create %>

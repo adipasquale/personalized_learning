@@ -1,0 +1,45 @@
+<fieldset id="questions">
+  <legend>Questions</legend>
+  <%= form_builder.fields_for :questions do |question_f| %>
+    <div class="row-fluid question_row<%= ' hide' if question_f.object.new_record? %>">
+      <div class="question span3">
+        <%= question_f.label :text, "question text" %>
+        <%= question_f.text_field :text %>
+        <% if !question_f.object.new_record? %>
+          <div>
+            <%= question_f.check_box :_destroy %>
+            <span class="help-inline">Destroy question</span>
+          </div>
+        <% end %>
+      </div>
+      <div class="choices span9">
+        <label>Choices</label>
+        <%= question_f.fields_for :choices do |choice_f| %>
+          <div class="choice_row<%= ' hide' if choice_f.object.new_record? %>">
+            <%= choice_f.text_field :text %>
+            <% if with_choices_labels %>
+              label :
+              <%= choice_f.text_field :label %>
+            <% end %>
+            <% if with_correct_checkboxes %>
+              <%= choice_f.check_box :right %>
+              <span class="help-inline">Correct</span>
+            <% end %>
+            <% if !choice_f.object.new_record? %>
+              <%= choice_f.check_box :_destroy %>
+              <span class="help-inline">Destroy choice</span>
+            <% end %>
+          </div>
+        <% end %>
+        <div>
+          <a href="javascript:void(0);" class="new_choice btn">Add a choice</a>
+        </div>
+      </div>
+    </div>
+  <% end %>
+  <div class="row-fluid">
+    <div class="span3">
+      <a href="javascript:void(0);" class="new_question btn">Add a question</a>
+    </div>
+  </div>
+</fieldset>

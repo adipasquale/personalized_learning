@@ -6,33 +6,18 @@ class TasksController < ApplicationController
   def show
     @task = Task.find params[:id]
     @task.personalize_material_for_user current_user
-    @task.questions.each do |question|
-      question.choices.each do |choice|
-        if current_user.answers.select{ |a| a.choice_id == choice.id}.empty?
-          current_user.answers.build choice_id: choice.id
-        end
-      end
-    end
+    build_answers @task, current_user
   end
 
   def new
     @task = Task.new
-    6.times do
-      question = @task.questions.build
-      6.times { question.choices.build }
-    end
+    build_questions @task, 6, 6
     render :edit
   end
 
   def edit
     @task = Task.find params[:id]
-    @task.questions.each do |question|
-      (6 - question.choices.count).times { question.choices.build }
-    end
-    (6 - @task.questions.count).times do
-      question = @task.questions.build
-      6.times { question.choices.build }
-    end
+    build_questions @task, 6, 6
   end
 
   def update

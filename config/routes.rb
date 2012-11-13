@@ -3,6 +3,7 @@ PersonalizedLearning::Application.routes.draw do
   resources :users, only: [:new, :show, :create, :destroy, :edit, :update] do
     member do
       put :answer_task
+      put :answer_questionnaire
     end
   end
   resources :sessions, only: [:new, :create, :destroy]

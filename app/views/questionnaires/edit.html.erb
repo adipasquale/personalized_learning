@@ -10,6 +10,9 @@
     </div>
   </div>
 
+  <%= render partial: "tasks/questions_fieldset", locals: { form_builder: f,
+    with_choices_labels: true, with_correct_checkboxes: false } %>
+
   <div class="row-fluid">
     <div class="span12">
       <%= f.submit( (@questionnaire.new_record? ? "Create" : "Update"),

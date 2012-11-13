@@ -4,15 +4,18 @@ class QuestionnairesController < ApplicationController
 
   def show
     @questionnaire = Questionnaire.find params[:id]
+    build_answers @questionnaire, current_user
   end
 
   def new
     @questionnaire = Questionnaire.new
+    build_questions @questionnaire, 10, 5
     render :edit
   end
 
   def edit
     @questionnaire = Questionnaire.find params[:id]
+    build_questions @questionnaire, 10, 5
   end
 
   def create

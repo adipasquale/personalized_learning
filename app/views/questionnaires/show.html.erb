@@ -1,1 +1,29 @@
 <h1> Questionnaire : <%= @questionnaire.name %> </h1>
+
+<%= form_for(current_user, url: answer_questionnaire_user_path(current_user)) do |f| %>
+  <% @questionnaire.questions.each do |question| %>
+    <div class="row-fluid questionnaire_row">
+      <div class="span12">
+        <h3><%= question.text %></h3>
+        <%= f.fields_for :answers, @answers[question.id] do |answer_f| %>
+          <div class="answer_box">
+            <%= answer_f.object.choice.text %>
+            <br />
+            <%= answer_f.check_box :keep_or_create %>
+            <br />
+            <%= answer_f.object.choice.label %>
+            <%= answer_f.hidden_field :choice_id %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="row-fluid answer_task_submit">
+    <div class="span6">
+      <%= hidden_field :questionnaire, :id %>
+      <%= f.submit( "Submit", :class => "btn btn-large btn-primary") %>
+    </div>
+  </div>
+
+<% end %>

@@ -8,7 +8,7 @@ class Task < ActiveRecord::Base
   accepts_nested_attributes_for :introns, :allow_destroy => true
 
   has_many :questions, dependent: :destroy
-  accepts_nested_attributes_for :questions, :reject_if => lambda { |o| o[:text].blank? }, :allow_destroy => true
+  accepts_nested_attributes_for :questions, :reject_if => lambda { |q| q[:text].blank? }, :allow_destroy => true
 
   validate :matching_introns
 
