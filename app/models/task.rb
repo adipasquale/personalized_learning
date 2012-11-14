@@ -1,5 +1,5 @@
 class Task < ActiveRecord::Base
-  attr_accessible :material, :name, :introns_attributes, :questions_attributes
+  attr_accessible :material, :name, :step_id, :introns_attributes, :questions_attributes
 
   validates :name, presence: true
   validates :material, presence: true
@@ -11,6 +11,8 @@ class Task < ActiveRecord::Base
   accepts_nested_attributes_for :questions, :reject_if => lambda { |q| q[:text].blank? }, :allow_destroy => true
 
   validate :matching_introns
+
+  belongs_to :step
 
   def personalize_material_for_user user
     introns.each do |intron|

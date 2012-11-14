@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  attr_accessible :is_admin, :login, :user_traits_attributes, :answers_attributes
+  attr_accessible :is_admin, :login, :step_id, :user_traits_attributes, :answers_attributes
 
   before_save :create_remember_token
 
@@ -13,6 +13,16 @@ class User < ActiveRecord::Base
   accepts_nested_attributes_for :answers, :allow_destroy => true
 
   scope :students, where(is_admin: [false, nil])
+
+  belongs_to :step
+
+  def current_tasks
+    Task.where(step_id: step_id)
+  end
+
+  def current_questionnaires
+    Questionnaire.where(step_id: step_id)
+  end
 
   private
 

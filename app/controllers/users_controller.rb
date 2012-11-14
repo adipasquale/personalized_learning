@@ -58,8 +58,8 @@ class UsersController < ApplicationController
   end
 
   def home
-    @tasks = Task.all
-    @questionnaires = Questionnaire.all
+    @tasks = current_user.current_tasks
+    @questionnaires = current_user.current_questionnaires
   end
 
   def answer_task

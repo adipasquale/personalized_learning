@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121113125218) do
+ActiveRecord::Schema.define(:version => 20121114111115) do
 
   create_table "answers", :force => true do |t|
     t.integer  "user_id"
@@ -61,11 +61,19 @@ ActiveRecord::Schema.define(:version => 20121113125218) do
     t.integer  "questionnaire_id"
   end
 
+  create_table "steps", :force => true do |t|
+    t.string   "name"
+    t.integer  "order"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "tasks", :force => true do |t|
     t.string   "name"
     t.text     "material"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.integer  "step_id"
   end
 
   create_table "traits", :force => true do |t|
@@ -89,6 +97,7 @@ ActiveRecord::Schema.define(:version => 20121113125218) do
     t.datetime "created_at",     :null => false
     t.datetime "updated_at",     :null => false
     t.string   "remember_token"
+    t.integer  "step_id"
   end
 
   add_index "users", ["remember_token"], :name => "index_users_on_remember_token"

@@ -6,4 +6,6 @@ class Questionnaire < ActiveRecord::Base
   has_many :questions, dependent: :destroy
   accepts_nested_attributes_for :questions, :reject_if => lambda { |q| q[:text].blank? }, :allow_destroy => true
 
+  belongs_to :step
+
 end
