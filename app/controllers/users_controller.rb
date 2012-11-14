@@ -1,9 +1,9 @@
 include UserTraitsHelper
 
 class UsersController < ApplicationController
-  before_filter :admin_user, only: [:new, :create, :show, :destroy]
-  before_filter :user_signed_in, only: [:edit, :update, :answer_task, :home]
-  before_filter :correct_user, only: [:edit, :update, :answer_task, :answer_questionnaire]
+  before_filter :admin_user, only: [:new, :edit, :update, :create, :show, :destroy]
+  before_filter :user_signed_in, only: [:edit_traits, :update_traits, :answer_task, :home]
+  before_filter :correct_user, only: [:edit_traits, :update_traits, :answer_task, :answer_questionnaire]
 
   def new
     @user = User.new
@@ -29,15 +29,29 @@ class UsersController < ApplicationController
     redirect_to admin_path
   end
 
-  def edit
+  def edit_traits
     fill_user_traits @user
   end
 
-  def update
+  def update_traits
     if @user.update_attributes(params[:user])
       flash[:success] = "Profile updated"
       sign_in @user
-      redirect_to edit_user_path(@user)
+      redirect_to home_path
+    else
+      render :edit_traits
+    end
+  end
+
+  def edit
+    @user = User.find params[:id]
+  end
+
+  def update
+    @user = User.find params[:id]
+    if @user.update_attributes(params[:user])
+      flash[:success] = "User updated"
+      redirect_to admin_path
     else
       render :edit
     end

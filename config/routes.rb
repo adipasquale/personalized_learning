@@ -4,6 +4,8 @@ PersonalizedLearning::Application.routes.draw do
     member do
       put :answer_task
       put :answer_questionnaire
+      get :edit_traits
+      put :update_traits
     end
   end
   resources :sessions, only: [:new, :create, :destroy]
