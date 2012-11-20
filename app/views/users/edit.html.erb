@@ -1,4 +1,4 @@
-<h1>Edit user</h1>
+<h1><%= @user.new_record? ? "New user" : "Edit user" %></h1>
 
 <div class="row-fluid">
   <div class="span12">
@@ -14,6 +14,13 @@
       </div>
 
       <div class="control-group">
+        <%= f.label :material_type, :class => "control-label" %>
+        <div class="controls">
+          <%= f.select :material_type, %w(traditional personalized) %>
+        </div>
+      </div>
+
+      <div class="control-group">
         <%= f.label :step_id, "Current step", :class => "control-label" %>
         <div class="controls">
           <%= f.collection_select :step_id, Step.all, :id, :name %>
@@ -22,7 +29,8 @@
 
       <div class="control-group">
         <div class="controls">
-          <%= f.submit "Update", class: "btn btn-large btn-primary" %>
+          <%= f.submit( (@user.new_record? ? "Create" : "Update"),
+            :class => "btn btn-large btn-primary") %>
         </div>
       </div>
 

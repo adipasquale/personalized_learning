@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121114111115) do
+ActiveRecord::Schema.define(:version => 20121120014239) do
 
   create_table "answers", :force => true do |t|
     t.integer  "user_id"
@@ -98,6 +98,7 @@ ActiveRecord::Schema.define(:version => 20121114111115) do
     t.datetime "updated_at",     :null => false
     t.string   "remember_token"
     t.integer  "step_id"
+    t.string   "material_type"
   end
 
   add_index "users", ["remember_token"], :name => "index_users_on_remember_token"

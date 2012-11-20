@@ -3,7 +3,7 @@ address = Trait.create name: "address"
 User.create login: 'dr.donghee', is_admin: true
 User.create login: 'dr.adrien', is_admin: true
 testuser = User.create login: 'testuser'
-UserTrait.create user_id: testuser.id, trait_id: address.id, value: '4-13-14 Shinohara Kitamachi, Chuo-ku, Osaka 541, Japan'
+UserTrait.create user_id: testuser.id, trait_id: address.id, value: '4-13-14 Shinohara Kitamachi, Chuo-ku, Osaka 541, Japan', material_type: "personalized"
 
 pre_test    = Step.create name: "pre-test",   order: 1
 practice    = Step.create name: "practice",   order: 2
