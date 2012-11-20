@@ -12,6 +12,11 @@
  *= require_tree .
  */
 
+$navbarText: #000;
+$navbarBrandColor: #000;
+$navbarLinkColor: #000;
+$navbarBackground: #D8E3CF;
+
 @import "bootstrap";
 @import "bootstrap-responsive";
 
@@ -23,6 +28,40 @@ html {
 
 .clear{
   clear: both;
+}
+
+h1{
+  font-size: 1.2em;
+}
+h4{
+  margin-bottom: 1em;
+}
+
+.container-fluid{
+  max-width: 1024px;
+  margin: auto;
+}
+
+.navbar-inner{
+  background-image: none;
+  &.registration{
+    background-color: #72B3BD;
+  }
+  &.pre-test{
+    background-color: #91D1C7;
+  }
+  &.practice{
+    background-color: #D8E3CF;
+  }
+  &.post-test{
+    background-color: #DCBCA8;
+  }
+  &.questionnaire{
+    background-color: #FFC78E;
+  }
+  .brand .step{
+    color: #FFF;
+  }
 }
 
 .navbar-text .user_login{

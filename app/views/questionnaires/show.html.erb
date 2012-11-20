@@ -1,13 +1,13 @@
-<h1> Questionnaire : <%= @questionnaire.name %> </h1>
+<h1> Questionnaire </h1>
 
 <%= form_for(current_user, url: answer_questionnaire_user_path(current_user)) do |f| %>
-  <% @questionnaire.questions.each do |question| %>
+  <% @questionnaire.questions.each.with_index do |question, idx| %>
     <div class="row-fluid questionnaire_row">
-      <div class="span12">
-        <h3><%= question.text %></h3>
+      <div class="span8">
+        <h4><%= "Q#{idx + 1}. #{question.text}" %></h4>
         <%= f.fields_for :answers, @answers[question.id] do |answer_f| %>
           <% if question.choices.empty? %>
-            <%= answer_f.text_area :text, :class => "span6" %>
+            <%= answer_f.text_area :text, :class => "span12", rows: 5 %>
             <%= answer_f.hidden_field :question_id %>
           <% else %>
             <div class="answer_box">
@@ -25,9 +25,9 @@
   <% end %>
 
   <div class="row-fluid answer_task_submit">
-    <div class="span6">
+    <div class="span8">
       <%= hidden_field :questionnaire, :id %>
-      <%= f.submit( "Submit", :class => "btn btn-large btn-primary") %>
+      <%= f.submit( "Submit", :class => "btn btn-large btn-primary pull-right") %>
     </div>
   </div>
 
