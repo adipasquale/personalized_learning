@@ -1,12 +1,13 @@
 class TasksController < ApplicationController
+  include UserTraitsHelper
+
   before_filter :admin_user, only: [:new, :create, :destroy]
   before_filter :user_signed_in, only: [:show]
   before_filter :build_preview_traits, only: [:new, :edit, :update]
 
   def show
-    # fill_user_traits current_user
+    fill_user_traits current_user
     @task = Task.find params[:id]
-    @task.personalize_content_for_user current_user
     build_answers @task, current_user
   end
 
@@ -47,6 +48,7 @@ class TasksController < ApplicationController
 
   def build_preview_traits
     user= User.find_by_login("testuser")
+    fill_user_traits user
     @preview_traits = {}
     Trait.no_options.each do |trait|
       user_trait = user.user_traits.where(trait_id: trait.id).first
