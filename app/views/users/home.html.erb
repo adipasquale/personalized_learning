@@ -1,30 +1,40 @@
 <h1>Home</h1>
 
 <div class="row-fluid">
-  <div class="span4">
-    <h2>Your settings</h2>
-    <ul>
-      <li><%= link_to "Edit my profile", edit_traits_user_path(current_user) %></li>
-    </ul>
-  </div>
-  <div class="span4">
-    <h2>Perform a task</h2>
-    <ul>
-      <% @tasks.each do |task| %>
-        <li>
-          <%= link_to task.name, task %>
-        </li>
-      <% end %>
-    </ul>
-  </div>
-  <div class="span4">
-    <h2>Fill a questionnaire</h2>
-    <ul>
-      <% @questionnaires.each do |questionnaire| %>
-        <li>
-          <%= link_to questionnaire.name, questionnaire %>
-        </li>
-      <% end %>
-    </ul>
+  <div class="span6">
+
+    <% case current_user.step.name %>
+      <% when "registration" then %>
+
+        For now on, you only have to fill up your profile :
+        <%= link_to "here", edit_traits_user_path(current_user) %> <br />
+        That's it !<br /></br />
+        Meet you on Monday 1st Dec. 1pm in W2 for the next parts :)
+
+      <% when "pre-test" %>
+
+        Please perform this <%= link_to "pre test task", @task %>.
+
+      <% when "practice" %>
+
+        Please perform all of these practice tasks :
+        <ul>
+          <% @tasks.each do |task| %>
+            <li>
+              <%= link_to task.name, task %>
+            </li>
+          <% end %>
+        </ul>
+
+      <% when "post-test" %>
+
+        Please perform this <%= link_to "post test task", @task %>.
+
+      <% when "questionnaire" %>
+
+        Please fill up this <%= link_to "post test questionnaire", @questionnaire %>.
+
+    <% end %>
+
   </div>
 </div>

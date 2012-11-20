@@ -4,4 +4,7 @@ class Step < ActiveRecord::Base
   has_many :users
   has_many :tasks
   has_many :questionnaires
+
+  validates :name, presence: true, uniqueness: true
+  validates :order, presence: true, uniqueness: true
 end
