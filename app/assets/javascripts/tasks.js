@@ -4,7 +4,7 @@ $(document).ready(function(){
   var current_slugs = [];
   var trait_options_html = $("select#prop_traits").html();
   var hidden_introns = $("#hidden_introns");
-  var introns_fieldset = $("#introns");
+  var introns_fieldset = $("#introns .introns_container");
 
   $("textarea#task_material").change(function(){
     var new_current_slugs = [];
@@ -53,21 +53,27 @@ $(document).ready(function(){
     // append intron divs for new slugs
     $.each(current_slugs, function(idx, slug){
       if (slug !== undefined) { // skip those deleted in previous step
-        var prefix = "task_introns_attributes_" + introns_count;
+        var id_prefix = "task_introns_attributes_" + introns_count;
+        var name_prefix = "task[introns_attributes][" + introns_count + "]";
 
         introns_fieldset.append(
           "<div class='intron row-fluid'>" +
             "<div class='trait span6'>" +
-              "<label for='" + prefix + "_slug'>" + slug + "</label>" +
-              "<input class='intron_slug' id='" + prefix + "_slug' " +
-                "name='task[introns_attributes][" + introns_count + "][slug]' " +
+              "<label for='" + id_prefix + "_slug'>" + slug + "</label>" +
+              "<input class='intron_slug' id='" + id_prefix + "_slug' " +
+                "name='" + name_prefix + "[slug]' " +
                 " type='hidden' value='" + slug + "'>" +
-              "<select id='" + prefix + "_trait_id' class='intron_trait' " +
-                "name='task[introns_attributes][" + introns_count + "][trait_id]'>" +
+              "<select id='" + id_prefix + "_trait_id' class='intron_trait' " +
+                "name='" + name_prefix + "[trait_id]'>" +
                 trait_options_html +
               "</select>" +
             "</div>" +
-            "<div class='variations span6'></div>" +
+            "<div class='contents span6'>" +
+              "<label for='" + id_prefix + "_traditional_content'>Traditional Content</label>" +
+              "<input id='" + id_prefix + "_traditional_content' type='text' " +
+              " name='" + name_prefix + "[traditional_content]' />" +
+              "<div class='variations'></div>" +
+            "</div>" +
           "</div>"
         );
         introns_count++;
@@ -100,7 +106,7 @@ $(document).ready(function(){
             "value='" + $(this).data('id') + "'/>";
           variation_count++;
       });
-      $(this).parent().siblings(".variations").html( variations_html );
+      $(this).parents(".intron").find(".variations").html( variations_html );
     });
   };
 

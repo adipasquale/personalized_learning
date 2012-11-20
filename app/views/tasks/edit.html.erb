@@ -15,7 +15,8 @@
       <%= f.text_area :material, rows: 10, :class => "span12" %>
     </div>
     <div class="span6">
-      <div class="task_material well"></div>
+      <label>Material Preview</label>
+      <div class="task_material alert alert-info"></div>
     </div>
   </div>
 
@@ -23,7 +24,7 @@
     <legend>Customizable parts</legend>
 
     <div class="row-fluid">
-      <div class="span6">
+      <div class="span6 introns_container">
         <%= f.fields_for :introns do |intron_f| %>
           <div class="intron row-fluid <%= "with_initial_variations" if !intron_f.object.variations.empty? %>">
             <div class='trait span6'>
@@ -35,12 +36,16 @@
               <%= intron_f.check_box :_destroy, :class => "intron_destroy" %>
             </div>
 
-            <div class="variations span6">
-              <%= intron_f.fields_for :variations do |variation_f| %>
-                <%= variation_f.label :content, variation_f.object.option.value %>
-                <%= variation_f.text_field :content %>
-                <%= variation_f.hidden_field :option_id %>
-              <% end %>
+            <div class="contents span6">
+              <%= intron_f.label :traditional_content %>
+              <%= intron_f.text_field :traditional_content %>
+              <div class="variations">
+                <%= intron_f.fields_for :variations do |variation_f| %>
+                  <%= variation_f.label :content, variation_f.object.option.value %>
+                  <%= variation_f.text_field :content %>
+                  <%= variation_f.hidden_field :option_id %>
+                <% end %>
+              </div>
             </div>
           </div>
         <% end %>
@@ -54,6 +59,11 @@
           <br /><br />
           To trigger processing of this form, please unfocus from the material
           textarea, that is click anywhere else on the page
+        </div>
+        <div class="alert alert-info">
+          Additional fields will appear if you select a Trait that has multiple
+          options. You can use these fields to enter customized variations for
+          each option.
         </div>
       </div>
     </div>

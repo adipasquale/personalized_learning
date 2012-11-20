@@ -4,6 +4,7 @@ class TasksController < ApplicationController
   before_filter :build_preview_traits, only: [:new, :edit, :update]
 
   def show
+    # fill_user_traits current_user
     @task = Task.find params[:id]
     @task.personalize_material_for_user current_user
     build_answers @task, current_user
@@ -24,10 +25,8 @@ class TasksController < ApplicationController
     @task = Task.find params[:id]
     if @task.update_attributes params[:task]
       flash[:success] = "Task #{@task.name} updated successfully"
-      redirect_to admin_path
-    else
-      render :edit
     end
+    render :edit
   end
 
   def create

@@ -4,5 +4,7 @@ class Variation < ActiveRecord::Base
   belongs_to :intron
   belongs_to :option
 
-  validates :content, presence: true
+  def get_content
+    content.blank? ? option.value : content
+  end
 end

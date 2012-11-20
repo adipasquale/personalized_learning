@@ -16,7 +16,7 @@ class Task < ActiveRecord::Base
 
   def personalize_material_for_user user
     introns.each do |intron|
-      val = intron.get_personalized_value_for_user user
+      val = intron.get_content_for_user user
       material.gsub!(/\$#{intron.slug}\$/, val) unless val.nil?
     end
   end
