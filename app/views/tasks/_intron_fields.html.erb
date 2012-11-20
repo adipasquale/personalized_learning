@@ -1,0 +1,22 @@
+<div class="intron row-fluid <%= "with_initial_variations" if !form_builder.object.variations.empty? %>">
+  <div class='trait span6'>
+    <%= form_builder.label :trait_id, form_builder.object.slug %>
+    <%= form_builder.collection_select :trait_id, Trait.all, :id, :name, :class => "intron_trait" %>
+
+    <%= form_builder.hidden_field :id %>
+    <%= form_builder.hidden_field :slug, :class => "intron_slug" %>
+    <%= form_builder.check_box :_destroy, :class => "intron_destroy" %>
+  </div>
+
+  <div class="contents span6">
+    <%= form_builder.label :traditional_content %>
+    <%= form_builder.text_field :traditional_content %>
+    <div class="variations">
+      <%= form_builder.fields_for :variations do |variation_f| %>
+        <%= variation_f.label :content, variation_f.object.option.value %>
+        <%= variation_f.text_field :content %>
+        <%= variation_f.hidden_field :option_id %>
+      <% end %>
+    </div>
+  </div>
+</div>

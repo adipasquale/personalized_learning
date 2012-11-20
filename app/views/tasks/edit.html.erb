@@ -24,32 +24,28 @@
     <legend>Customizable parts</legend>
 
     <div class="row-fluid">
+
       <div class="span6 introns_container">
-        <%= f.fields_for :introns do |intron_f| %>
-          <div class="intron row-fluid <%= "with_initial_variations" if !intron_f.object.variations.empty? %>">
-            <div class='trait span6'>
-              <%= intron_f.label :trait_id, intron_f.object.slug %>
-              <%= intron_f.collection_select :trait_id, Trait.all, :id, :name, :class => "intron_trait" %>
+        <div id="introns_from_task">
+          <h4>In material</h4>
+          <%= f.fields_for :introns do |intron_f| %>
+            <%= render partial: "intron_fields", locals: { form_builder: intron_f } %>
+          <% end %>
+        </div>
 
-              <%= intron_f.hidden_field :id %>
-              <%= intron_f.hidden_field :slug, :class => "intron_slug" %>
-              <%= intron_f.check_box :_destroy, :class => "intron_destroy" %>
-            </div>
-
-            <div class="contents span6">
-              <%= intron_f.label :traditional_content %>
-              <%= intron_f.text_field :traditional_content %>
-              <div class="variations">
-                <%= intron_f.fields_for :variations do |variation_f| %>
-                  <%= variation_f.label :content, variation_f.object.option.value %>
-                  <%= variation_f.text_field :content %>
-                  <%= variation_f.hidden_field :option_id %>
-                <% end %>
-              </div>
-            </div>
+        <% f.object.questions.each.with_index do |question,index| %>
+          <div id="introns_from_question_<%= index %>" class="<%= 'hide' if question.introns.empty? %>">
+            <h4>In question n°<%= index %></h4>
+            <%= f.fields_for :questions, question, child_index: index do |question_f| %>
+              <%= question_f.fields_for :introns do |intron_f| %>
+                <%= render partial: "intron_fields", locals: { form_builder: intron_f } %>
+              <% end %>
+            <% end %>
           </div>
         <% end %>
+
       </div>
+
       <div class="span6">
         <div class="alert alert-info">
           The customizable parts will appear as you type in the material.
@@ -79,7 +75,13 @@
 <% end %>
 
 
-  <div id="hidden_introns">
+  <!-- hidden introns containers -->
+  <div id="hidden_introns_from_task" class="hide"></div>
+  <% @task.questions.each.with_index do |question,index| %>
+    <div id="hidden_introns_from_question_<%= index %>" class="hide"></div>
+  <% end %>
+
+  <div class="hide">
     <select id="prop_traits">
       <%= options_from_collection_for_select Trait.all, :id, :name %>
     </select>

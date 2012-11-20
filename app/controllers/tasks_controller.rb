@@ -6,7 +6,7 @@ class TasksController < ApplicationController
   def show
     # fill_user_traits current_user
     @task = Task.find params[:id]
-    @task.personalize_material_for_user current_user
+    @task.personalize_content_for_user current_user
     build_answers @task, current_user
   end
 

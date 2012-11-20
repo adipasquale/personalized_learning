@@ -3,22 +3,22 @@ $(document).ready(function(){
   var slugs_re = /\$([a-z_]{1,20})\$/g;
   var current_slugs = [];
   var trait_options_html = $("select#prop_traits").html();
-  var hidden_introns = $("#hidden_introns");
   var introns_fieldset = $("#introns .introns_container");
+  var $material = $("textarea#task_material");
 
-  $("textarea#task_material").change(function(){
+  var refreshIntronsFields = function(params){
+
+    // parse text to extract slugs
     var new_current_slugs = [];
-    var material = $(this).val();
-    while ((res = slugs_re.exec(material)) !== null) {
+    while ((res = slugs_re.exec(params.content.val())) !== null) {
       var slug = res[1];
       new_current_slugs.push(slug);
     }
     current_slugs = new_current_slugs;
 
-    var introns_count = 0;
-
     // remove intron divs for slugs not anymore present
-    introns_fieldset.find(".intron_slug").each( function(){
+    var introns_count = 0;
+    params.introns_container.find(".intron_slug").each( function(){
       var slug_idx = current_slugs.indexOf( $(this).val() );
       var intron_div = $(this).parents(".intron");
       var destroy_checkbox = intron_div.find(".intron_destroy");
@@ -28,7 +28,8 @@ $(document).ready(function(){
           destroy_checkbox.attr("checked", "checked");
           intron_div.addClass("hide");
         } else {
-          intron_div.detach().appendTo(hidden_introns);
+          console.log("detaching", intron_div, params.hidden_introns);
+          intron_div.detach().appendTo(params.hidden_introns);
         }
       } else {
         if (destroy_checkbox.size() > 0) {
@@ -41,11 +42,11 @@ $(document).ready(function(){
     });
 
     // retreive new introns forms that were previously hidden
-    $("#hidden_introns .intron_slug").each( function(){
+    params.hidden_introns.find(".intron_slug").each( function(){
       var intron_div = $(this).parents(".intron");
       var slug_idx = current_slugs.indexOf( $(this).val() );
       if ( slug_idx > -1) {
-        intron_div.detach().appendTo(introns_fieldset);
+        intron_div.detach().appendTo(params.introns_container);
       }
       delete(current_slugs[slug_idx]);
     });
@@ -53,10 +54,10 @@ $(document).ready(function(){
     // append intron divs for new slugs
     $.each(current_slugs, function(idx, slug){
       if (slug !== undefined) { // skip those deleted in previous step
-        var id_prefix = "task_introns_attributes_" + introns_count;
-        var name_prefix = "task[introns_attributes][" + introns_count + "]";
+        var id_prefix = params.id_prefix + "_introns_attributes_" + introns_count;
+        var name_prefix = params.name_prefix + "[introns_attributes][" + introns_count + "]";
 
-        introns_fieldset.append(
+        params.introns_container.append(
           "<div class='intron row-fluid'>" +
             "<div class='trait span6'>" +
               "<label for='" + id_prefix + "_slug'>" + slug + "</label>" +
@@ -81,9 +82,23 @@ $(document).ready(function(){
     });
 
     rebindTraitSelects();
+  };
 
-    updatePreview(material);
+  $("textarea#task_material").change(function(){
+    refreshIntronsFields({
+      "name_prefix": "task", "id_prefix": "task",
+      "content" : $(this), "introns_container": $("#introns_from_task"),
+      "hidden_introns": $("#hidden_introns_from_task") });
+    updatePreview( $(this).val() );
+  });
 
+  $("#questions .question_text").change(function(){
+    var idx = $(this).data('idx');
+    refreshIntronsFields({
+      "name_prefix": "task[questions_attributes][" + idx + "]", "id_prefix": "task_questions_attributes_" + idx,
+      "content" : $(this), "introns_container": $("#introns_from_question_" + idx),
+      "hidden_introns": $("#hidden_introns_from_question_" + idx) });
+    $("#introns_from_question_" + idx).removeClass("hide");
   });
 
   var rebindTraitSelects = function(){

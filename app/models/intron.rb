@@ -2,7 +2,11 @@ class Intron < ActiveRecord::Base
   attr_accessible :slug, :traditional_content, :task_id, :trait_id, :variations_attributes
 
   belongs_to :trait
+
+  # one of these three, should have a table for CustomizableItem instead
   belongs_to :task
+  belongs_to :question
+  belongs_to :choice
 
   validates :slug, presence: true
   validates :traditional_content, presence: true
