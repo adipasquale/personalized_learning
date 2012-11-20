@@ -1,12 +1,12 @@
 <fieldset id="questions">
   <legend>Questions</legend>
 
-  <% form_builder.object.questions.each.with_index do |question,index| %>
-    <%= form_builder.fields_for :questions, question, child_index: index do |question_f| %>
+  <% form_builder.object.questions.each.with_index do |question,q_index| %>
+    <%= form_builder.fields_for :questions, question, child_index: q_index do |question_f| %>
       <div class="row-fluid question_row<%= ' hide' if question_f.object.new_record? %>">
         <div class="question span3">
           <%= question_f.label :text, "question text" %>
-          <%= question_f.text_field :text, :class => "question_text", "data-idx" => index %>
+          <%= question_f.text_field :text, :class => "question_text", "data-idx" => q_index %>
           <% if !question_f.object.new_record? %>
             <div>
               <%= question_f.check_box :_destroy %>
@@ -16,22 +16,25 @@
         </div>
         <div class="choices span9">
           <label>Choices</label>
-          <%= question_f.fields_for :choices do |choice_f| %>
-            <div class="choice_row<%= ' hide' if choice_f.object.new_record? %>">
-              <%= choice_f.text_field :text %>
-              <% if with_choices_labels %>
-                label :
-                <%= choice_f.text_field :label %>
-              <% end %>
-              <% if with_correct_checkboxes %>
-                <%= choice_f.check_box :right %>
-                <span class="help-inline">Correct</span>
-              <% end %>
-              <% if !choice_f.object.new_record? %>
-                <%= choice_f.check_box :_destroy %>
-                <span class="help-inline">Destroy choice</span>
-              <% end %>
-            </div>
+          <% question_f.object.choices.each.with_index do |choice, c_index| %>
+            <%= question_f.fields_for :choices, choice, child_index: c_index do |choice_f| %>
+              <div class="choice_row<%= ' hide' if choice_f.object.new_record? %>">
+                <%= choice_f.text_field :text, :class => "choice_text",
+                  "data-question-idx" => q_index, "data-idx" => c_index %>
+                <% if with_choices_labels %>
+                  label :
+                  <%= choice_f.text_field :label %>
+                <% end %>
+                <% if with_correct_checkboxes %>
+                  <%= choice_f.check_box :right %>
+                  <span class="help-inline">Correct</span>
+                <% end %>
+                <% if !choice_f.object.new_record? %>
+                  <%= choice_f.check_box :_destroy %>
+                  <span class="help-inline">Destroy choice</span>
+                <% end %>
+              </div>
+            <% end %>
           <% end %>
           <div>
             <a href="javascript:void(0);" class="new_choice btn">Add a choice</a>

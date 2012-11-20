@@ -12,4 +12,8 @@ class Task < CustomizableItem
   has_many :introns, dependent: :destroy
   accepts_nested_attributes_for :introns, :allow_destroy => true
 
+  def personalizable_content
+    material
+  end
+
 end

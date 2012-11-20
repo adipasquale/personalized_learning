@@ -5,11 +5,11 @@ class CustomizableItem < ActiveRecord::Base
   validate :matching_introns
 
   def personalize_content_for_user user
-    content = material || text || value
     introns.each do |intron|
       val = intron.get_content_for_user user
-      content.gsub!(/\$#{intron.slug}\$/, val) unless val.nil?
+      personalizable_content.gsub!(/\$#{intron.slug}\$/, val) unless val.nil?
     end
+    personalizable_content
   end
 
   private

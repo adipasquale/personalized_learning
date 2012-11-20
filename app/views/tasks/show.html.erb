@@ -9,8 +9,8 @@
 <%= form_for(current_user, url: answer_task_user_path(current_user)) do |f| %>
   <div class="row-fluid">
     <% @task.questions.each do |question| %>
-      <div class="span3">
-        <h3><%= question.text %></h3>
+      <div class="span6">
+        <h3><%= question.personalize_content_for_user current_user %></h3>
         <%= f.fields_for :answers, @answers[question.id] do |answer_f| %>
           <div>
             <%= answer_f.hidden_field :choice_id %>

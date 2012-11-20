@@ -95,10 +95,26 @@ $(document).ready(function(){
   $("#questions .question_text").change(function(){
     var idx = $(this).data('idx');
     refreshIntronsFields({
-      "name_prefix": "task[questions_attributes][" + idx + "]", "id_prefix": "task_questions_attributes_" + idx,
-      "content" : $(this), "introns_container": $("#introns_from_question_" + idx),
+      "name_prefix": "task[questions_attributes][" + idx + "]",
+      "id_prefix": "task_questions_attributes_" + idx,
+      "content" : $(this),
+      "introns_container": $("#introns_from_question_" + idx),
       "hidden_introns": $("#hidden_introns_from_question_" + idx) });
-    $("#introns_from_question_" + idx).removeClass("hide");
+    $("#introns_from_question_" + idx).parent().removeClass("hide");
+  });
+
+  $("#questions .choice_text").change(function(){
+    var c_idx = $(this).data('idx');
+    var q_idx = $(this).data('question-idx');
+    refreshIntronsFields({
+      "name_prefix": "task[questions_attributes][" + q_idx + "][choices_attributes][" + c_idx + "]",
+      "id_prefix": "task_questions_attributes_" + q_idx + "_choices_attributes_" + c_idx,
+      "content" : $(this),
+      "introns_container": $("#introns_from_question_" + q_idx + "_choice_" + c_idx),
+      "hidden_introns": $("#hidden_introns_from_question_" + q_idx + "_choice_" + c_idx)
+    });
+    $("#introns_from_question_" + q_idx + "_choice_" + c_idx).removeClass("hide")
+      .parent.removeClass("hide");
   });
 
   var rebindTraitSelects = function(){
