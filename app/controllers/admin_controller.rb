@@ -1,5 +1,7 @@
 class AdminController < ApplicationController
 
+  before_filter :admin_user
+
   def home
     @tasks = Task.all
     @users = User.students.all
