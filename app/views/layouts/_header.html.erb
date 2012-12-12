@@ -1,5 +1,5 @@
 <header class="navbar <%= "user_connected" if signed_in? %>">
-  <div class="navbar-inner step_<%= current_user.step.order if signed_in? %>">
+  <div class="navbar-inner step_<%= current_user.step.sequence_order if signed_in? %>">
     <div class="container-fluid">
       <div>
         <a href="<%= root_path %>" id= "logo" class="brand">
@@ -47,7 +47,7 @@
     <div class="breadcrumbs">
       <ul>
         <% Step.all.each do |step| %>
-          <li class="step_<%= step.order %> <%= "selected" if current_user.step == step %>">
+          <li class="step_<%= step.sequence_order %> <%= "selected" if current_user.step == step %>">
             <div class="triangle"></div>
             <div class="content"><%= step.name %></div>
           </li>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121211125100) do
+ActiveRecord::Schema.define(:version => 20121212121132) do
 
   create_table "answers", :force => true do |t|
     t.integer  "user_id"
@@ -66,9 +66,9 @@ ActiveRecord::Schema.define(:version => 20121211125100) do
 
   create_table "steps", :force => true do |t|
     t.string   "name"
-    t.integer  "order"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.integer  "sequence_order"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
   end
 
   create_table "tasks", :force => true do |t|

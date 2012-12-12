@@ -1,8 +1,8 @@
-registration      = Step.create name: "registration",   order: 1
-pre_test          = Step.create name: "pre-test",   order: 2
-practice          = Step.create name: "practice",   order: 3
-post_test         = Step.create name: "post-test",  order: 4
-questionnaire_step = Step.create name: "questionnaire",  order: 5
+registration      = Step.create name: "registration",   sequence_order: 1
+pre_test          = Step.create name: "warm up",   sequence_order: 2
+practice          = Step.create name: "practice",   sequence_order: 3
+post_test         = Step.create name: "wrap up",  sequence_order: 4
+questionnaire_step = Step.create name: "questionnaire",  sequence_order: 5
 
 User.create login: 'dr.donghee', is_admin: true, material_type: "personalized", step_id: registration.id
 User.create login: 'dr.adrien', is_admin: true, material_type: "personalized", step_id: registration.id

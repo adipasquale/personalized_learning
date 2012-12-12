@@ -4,7 +4,7 @@
   <div class="span6">
 
     <% if (!@tasks or @tasks.empty?) and !@questionnaire %>
-      <% if current_user.step.order == 1 %>
+      <% if current_user.step.sequence_order == 1 %>
         For now on, you only have to fill up your profile :
         <%= link_to "here", edit_traits_user_path(current_user) %> <br />
         That's it !<br /></br />
