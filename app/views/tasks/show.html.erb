@@ -18,6 +18,7 @@
         <%= f.fields_for :answers, @answers[question.id] do |answer_f| %>
           <div>
             <%= answer_f.hidden_field :choice_id %>
+            <%= answer_f.hidden_field :question_id %>
             <%= answer_f.check_box :keep_or_create %>
             <%= answer_f.object.choice.personalize_content_for_user(current_user) %>
           </div>

@@ -3,36 +3,37 @@
 <div class="row-fluid">
   <div class="span6">
 
-    <% case current_user.step.name %>
-      <% when "registration" then %>
-
+    <% if (!@tasks or @tasks.empty?) and !@questionnaire %>
+      <% if current_user.step.order == 1 %>
         For now on, you only have to fill up your profile :
         <%= link_to "here", edit_traits_user_path(current_user) %> <br />
         That's it !<br /></br />
         Meet you on Monday 1st Dec. 1pm in W2 for the next parts :)
+      <% else %>
+        You have finished this step, congratulations !
+        <!--You have finished ! thank you for participating :)-->
+      <% end %>
 
-      <% when "pre-test" %>
+    <% else %>
 
-        Please perform this <%= link_to "pre test task", @task %>.
+      <% if @tasks %>
+        <% if @tasks.size > 1 %>
+          Please perform all of these tasks :
+          <ul>
+            <% @tasks.each do |task| %>
+              <li>
+                <%= link_to task.name, task %>
+              </li>
+            <% end %>
+          </ul>
+        <% elsif @tasks.size == 1 %>
+          Please perform this <%= link_to "task", @tasks.first %>.
+        <% end %>
+      <% end %>
 
-      <% when "practice" %>
-
-        Please perform all of these practice tasks :
-        <ul>
-          <% @tasks.each do |task| %>
-            <li>
-              <%= link_to task.name, task %>
-            </li>
-          <% end %>
-        </ul>
-
-      <% when "post-test" %>
-
-        Please perform this <%= link_to "post test task", @task %>.
-
-      <% when "questionnaire" %>
-
-        Please fill up this <%= link_to "post test questionnaire", @questionnaire %>.
+      <% if @questionnaires.size == 1 %>
+          Please fill up this <%= link_to "questionnaire", @questionnaires.first %>.
+      <% end %>
 
     <% end %>
 

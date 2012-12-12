@@ -18,7 +18,7 @@
                   </li>
                 <% else %>
                   <li><a href="<%= home_path %>">
-                    <i class="icon-home icon-white"></i>My Home</a>
+                    <i class="icon-play icon-white"></i>Resume Experiment</a>
                   </li>
                   <li><a href="<%= edit_traits_user_path(current_user) %>">
                     <i class="icon-user icon-white"></i>My Profile</a>
@@ -32,6 +32,7 @@
               <span class="user_login">
                 <%= current_user.login %> <%= " (admin)" if current_user.is_admin? %>
               </span>
+              !
             </p>
           <% end %>
         </nav>

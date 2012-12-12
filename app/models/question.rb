@@ -12,6 +12,8 @@ class Question < CustomizableItem
   has_many :introns, dependent: :destroy
   accepts_nested_attributes_for :introns, :allow_destroy => true
 
+  has_many :answers, dependent: :destroy
+
   def has_any_nested_introns?
     !introns.empty? or choices.any? { |c| !c.introns.empty? }
   end

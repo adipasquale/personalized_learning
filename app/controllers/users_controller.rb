@@ -59,9 +59,15 @@ class UsersController < ApplicationController
   end
 
   def home
-    @tasks = current_user.current_tasks if current_user.step.name == "practice"
-    @task = current_user.current_tasks.first if ["pre-test", "post-test"].include? current_user.step.name
-    @questionnaire = current_user.current_questionnaires.first if current_user.step.name == "questionnaire"
+    @tasks = current_user.current_tasks
+    if !@tasks.empty?
+      redirect_to @tasks.first
+    else
+      @questionnaires = current_user.current_questionnaires
+      if !@questionnaires.empty?
+        redirect_to @questionnaires.first
+      end
+    end
   end
 
   def answer_task

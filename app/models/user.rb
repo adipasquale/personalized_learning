@@ -18,18 +18,35 @@ class User < ActiveRecord::Base
 
   validates_inclusion_of :material_type, :in => %w(personalized traditional)
 
-  def current_tasks
-    Task.where(step_id: step_id)
+  def current_tasks(options={})
+    tasks = Task.where(step_id: step_id)
+    current_objects(tasks, options)
   end
 
-  def current_questionnaires
-    Questionnaire.where(step_id: step_id)
+  def current_questionnaires(options={})
+    questionnaires = Questionnaire.where(step_id: step_id)
+    current_objects(questionnaires, options)
   end
 
   private
 
     def create_remember_token
       self.remember_token = SecureRandom.urlsafe_base64
+    end
+
+    # objects are Tasks or Questionnaires
+    def current_objects(objects, options={})
+      if !options[:all]
+        objects.reject! do |object|
+          questions_count = object.questions.count
+          answers_count = object.questions.map { |question|
+            question.answers.where(user_id: self.id).count
+          }.sum
+          puts "reject ? #{questions_count == answers_count}"
+          questions_count == answers_count
+        end
+      end
+      objects
     end
 
 end

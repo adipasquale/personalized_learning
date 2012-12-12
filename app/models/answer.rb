@@ -8,4 +8,5 @@ class Answer < ActiveRecord::Base
   def keep_or_create
     !new_record?
   end
+
 end
