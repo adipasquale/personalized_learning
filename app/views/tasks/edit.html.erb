@@ -75,7 +75,7 @@
         <div class="trait" data-id=<%= trait.id %>>
           <% trait.options.each do |option| %>
             <input type="hidden" class="option"
-              data-id=<%= option.id %> data-value=<%= option.value %> />
+              data-id="<%= option.id %>" data-value="<%= option.value %>" />
           <% end %>
         </div>
       <% end %>

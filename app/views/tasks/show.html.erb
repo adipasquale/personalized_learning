@@ -14,13 +14,19 @@
     <div class='span2'></div>
     <% @task.questions.each.with_index do |question, idx| %>
       <div class="span4">
-        <h4><%= question.personalize_content_for_user(current_user) %></h4>
+        <h4>
+          Q<%= idx+1 %>.
+          <%= question.personalize_content_for_user(current_user) %>
+        </h4>
+        <% answer_counter = 97; #TODO: this is ugly ! %>
         <%= f.fields_for :answers, @answers[question.id] do |answer_f| %>
           <div>
             <%= answer_f.hidden_field :choice_id %>
             <%= answer_f.hidden_field :question_id %>
             <%= answer_f.check_box :keep_or_create %>
+            (<%= answer_counter.chr.capitalize %>)
             <%= answer_f.object.choice.personalize_content_for_user(current_user) %>
+            <% answer_counter += 1 %>
           </div>
         <% end %>
       </div>
