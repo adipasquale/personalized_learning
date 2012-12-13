@@ -113,8 +113,9 @@ $(document).ready(function(){
       "introns_container": $("#introns_from_question_" + q_idx + "_choice_" + c_idx),
       "hidden_introns": $("#hidden_introns_from_question_" + q_idx + "_choice_" + c_idx)
     });
+    console.log("introns from question div : ", $("#introns_from_question_" + q_idx + "_choice_" + c_idx));
     $("#introns_from_question_" + q_idx + "_choice_" + c_idx).removeClass("hide")
-      .parent.removeClass("hide");
+      .parent().removeClass("hide");
   });
 
   var rebindTraitSelects = function(){
@@ -149,11 +150,14 @@ $(document).ready(function(){
       var trait_id = $(this).find("select").val();
       var intron_slug = $(this).find(".intron_slug").val();
       var preview_value = window.preview_traits[parseInt(trait_id, 10)];
-      if ( preview_value === undefined) {
+      if ( preview_value === undefined || preview_value === "") {
         preview_value = $(this).find("input[type='text']:first").val();
       }
       if ( preview_value !== undefined) {
-        material = material.replace( new RegExp("\\$" + intron_slug + "\\$", 'g'), preview_value);
+        material = material.replace(
+          new RegExp("\\$" + intron_slug + "\\$", 'g'),
+          "<span class='exon' title='" + intron_slug + "'>" + preview_value + "</span>"
+        );
       }
     });
     $(".task_material").html(material);
