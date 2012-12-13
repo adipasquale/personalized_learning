@@ -23,6 +23,8 @@ experiment.
 
 ## Models detail
 
+![UML Diagram](https://www.lucidchart.com/publicSegments/view/50c96911-3410-4303-8d47-3d0d0a7c4e7c/image.png)
+
 ### Tasks
 
 A Task designates an exercise close to TOEIC part 7 type exercises.
