@@ -10,9 +10,11 @@ $(document).ready(function(){
 
     // parse text to extract slugs
     var new_current_slugs = [];
-    while ((res = slugs_re.exec(params.content.val())) !== null) {
+    while ((res = slugs_re.exec(params.content)) !== null) {
       var slug = res[1];
-      new_current_slugs.push(slug);
+      if (new_current_slugs.indexOf(slug) == -1) {
+        new_current_slugs.push(slug);
+      }
     }
     current_slugs = new_current_slugs;
 
@@ -84,38 +86,24 @@ $(document).ready(function(){
     rebindTraitSelects();
   };
 
-  $("textarea#task_material").change(function(){
+  var commonRefresh = function(){
+    var content = $("textarea#task_material").val();
+    $("#questions .question_text, #questions .choice_text").each(function(){
+      content += "\n" + $(this).val();
+    });
     refreshIntronsFields({
       "name_prefix": "task", "id_prefix": "task",
-      "content" : $(this), "introns_container": $("#introns_from_task"),
+      "content" : content, "introns_container": $("#introns_from_task"),
       "hidden_introns": $("#hidden_introns_from_task") });
+  };
+
+  $("textarea#task_material").change(function(){
+    commonRefresh();
     updatePreview( $(this).val() );
   });
 
-  $("#questions .question_text").change(function(){
-    var idx = $(this).data('idx');
-    refreshIntronsFields({
-      "name_prefix": "task[questions_attributes][" + idx + "]",
-      "id_prefix": "task_questions_attributes_" + idx,
-      "content" : $(this),
-      "introns_container": $("#introns_from_question_" + idx),
-      "hidden_introns": $("#hidden_introns_from_question_" + idx) });
-    $("#introns_from_question_" + idx).parent().removeClass("hide");
-  });
-
-  $("#questions .choice_text").change(function(){
-    var c_idx = $(this).data('idx');
-    var q_idx = $(this).data('question-idx');
-    refreshIntronsFields({
-      "name_prefix": "task[questions_attributes][" + q_idx + "][choices_attributes][" + c_idx + "]",
-      "id_prefix": "task_questions_attributes_" + q_idx + "_choices_attributes_" + c_idx,
-      "content" : $(this),
-      "introns_container": $("#introns_from_question_" + q_idx + "_choice_" + c_idx),
-      "hidden_introns": $("#hidden_introns_from_question_" + q_idx + "_choice_" + c_idx)
-    });
-    console.log("introns from question div : ", $("#introns_from_question_" + q_idx + "_choice_" + c_idx));
-    $("#introns_from_question_" + q_idx + "_choice_" + c_idx).removeClass("hide")
-      .parent().removeClass("hide");
+  $("#questions .question_text, #questions .choice_text").change(function(){
+    commonRefresh();
   });
 
   var rebindTraitSelects = function(){

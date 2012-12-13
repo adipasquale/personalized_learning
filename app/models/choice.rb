@@ -8,6 +8,8 @@ class Choice < CustomizableItem
   has_many :introns, dependent: :destroy
   accepts_nested_attributes_for :introns, :allow_destroy => true
 
+  delegate :introns, to: :question
+
   def personalizable_content
     text
   end

@@ -14,6 +14,8 @@ class Question < CustomizableItem
 
   has_many :answers, dependent: :destroy
 
+  delegate :introns, to: :task
+
   def has_any_nested_introns?
     !introns.empty? or choices.any? { |c| !c.introns.empty? }
   end

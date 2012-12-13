@@ -27,35 +27,10 @@
 
       <div class="span6 introns_container">
         <div id="introns_from_task">
-          <h4>In material</h4>
           <%= f.fields_for :introns do |intron_f| %>
             <%= render partial: "intron_fields", locals: { form_builder: intron_f } %>
           <% end %>
         </div>
-
-        <% f.object.questions.each.with_index do |question, q_index| %>
-          <div class="<%= 'hide' if !question.has_any_nested_introns? %>">
-            <h4>In question n°<%= q_index %></h4>
-            <%= f.fields_for :questions, question, child_index: q_index do |question_f| %>
-              <div id="introns_from_question_<%= q_index %>">
-                <%= question_f.fields_for :introns do |intron_f| %>
-                  <%= render partial: "intron_fields", locals: { form_builder: intron_f } %>
-                <% end %>
-              </div>
-
-              <% question_f.object.choices.each.with_index do |choice, c_index| %>
-                <div id="introns_from_question_<%= q_index %>_choice_<%= c_index %>" class="<%= 'hide' if choice.introns.empty? %>">
-                  <h5>In choice n°<%= c_index %></h5>
-                  <%= question_f.fields_for :choices, choice, child_index: c_index do |choice_f| %>
-                    <%= choice_f.fields_for :introns do |intron_f| %>
-                      <%= render partial: "intron_fields", locals: { form_builder: intron_f } %>
-                    <% end %>
-                  <% end %>
-                </div>
-              <% end %>
-            <% end %>
-          </div>
-        <% end %>
       </div>
 
       <div class="span6">
@@ -89,13 +64,6 @@
 
   <!-- hidden introns containers -->
   <div id="hidden_introns_from_task" class="hide"></div>
-  <% @task.questions.each.with_index do |question, q_index| %>
-    <div id="hidden_introns_from_question_<%= q_index %>" class="hide"></div>
-    <% question.choices.each.with_index do |choice, c_index| %>
-      <div id="hidden_introns_from_question_<%= q_index %>_choice_<%= c_index %>"
-        class="hide"></div>
-    <% end %>
-  <% end %>
 
   <div class="hide">
     <select id="prop_traits">
