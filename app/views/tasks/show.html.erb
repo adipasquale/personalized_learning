@@ -14,10 +14,10 @@
     <div class='span2'></div>
     <% @task.questions.each.with_index do |question, idx| %>
       <div class="span4">
-        <h4>
+        <h5>
           Q<%= idx+1 %>.
           <%= question.personalize_content_for_user(current_user) %>
-        </h4>
+        </h5>
         <% answer_counter = 97; #TODO: this is ugly ! %>
         <%= f.fields_for :answers, @answers[question.id] do |answer_f| %>
           <div>

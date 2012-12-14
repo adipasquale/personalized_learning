@@ -6,6 +6,7 @@ PersonalizedLearning::Application.routes.draw do
       put :answer_questionnaire
       get :edit_traits
       put :update_traits
+      get :move_to_next_step
     end
   end
   resources :sessions, only: [:new, :create, :destroy]

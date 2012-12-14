@@ -2,8 +2,8 @@ include UserTraitsHelper
 
 class UsersController < ApplicationController
   before_filter :admin_user, only: [:new, :edit, :update, :create, :show, :destroy]
-  before_filter :user_signed_in, only: [:edit_traits, :update_traits, :answer_task, :home]
-  before_filter :correct_user, only: [:edit_traits, :update_traits, :answer_task, :answer_questionnaire]
+  before_filter :user_signed_in, only: [:edit_traits, :update_traits, :answer_task, :home, :move_to_next_step]
+  before_filter :correct_user, only: [:edit_traits, :update_traits, :answer_task, :answer_questionnaire, :move_to_next_step]
 
   def new
     @user = User.new
@@ -56,6 +56,16 @@ class UsersController < ApplicationController
     else
       render :edit
     end
+  end
+
+  def move_to_next_step
+    @user = User.find params[:id]
+    next_step = Step.where("sequence_order > ?", @user.step.sequence_order).first
+    if !next_step.nil? and @user.update_attributes(step_id: next_step.id)
+      flash[:success] = "Successfully moved to next step !"
+      sign_in @user
+    end
+    redirect_to home_path
   end
 
   def home

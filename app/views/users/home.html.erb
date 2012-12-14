@@ -1,7 +1,7 @@
 <h1>Home</h1>
 
 <div class="row-fluid">
-  <div class="span6">
+  <div class="span12">
 
     <% if (!@tasks or @tasks.empty?) and !@questionnaire %>
       <% if current_user.step.sequence_order == 1 %>
@@ -12,6 +12,11 @@
         You have finished this step, congratulations !
         <!--You have finished ! thank you for participating :)-->
       <% end %>
+
+      <span class="pull-right">
+        Please confirm with us and click there :
+        <%= link_to("Next Step", move_to_next_step_user_path(current_user), "class" => "btn btn-large btn-primary" ) %>
+      </span>
 
     <% else %>
 
