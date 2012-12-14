@@ -19,13 +19,17 @@ class User < ActiveRecord::Base
   validates_inclusion_of :material_type, :in => %w(personalized traditional)
 
   def current_tasks(options={})
-    tasks = Task.where(step_id: step_id)
+    tasks = Task.where(step_id: step_id, is_finalized: true)
     current_objects(tasks, options)
   end
 
   def current_questionnaires(options={})
     questionnaires = Questionnaire.where(step_id: step_id)
     current_objects(questionnaires, options)
+  end
+
+  def next_step
+    Step.where("sequence_order > ?", step.sequence_order).first
   end
 
   private

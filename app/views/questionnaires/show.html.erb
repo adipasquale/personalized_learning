@@ -4,7 +4,7 @@
   <% @questionnaire.questions.each.with_index do |question, idx| %>
     <div class="row-fluid questionnaire_row">
       <div class="span8">
-        <h4><%= "Q#{idx + 1}. #{question.text}" %></h4>
+        <h5><%= "Q#{idx + 1}. #{question.text}" %></h5>
         <%= f.fields_for :answers, @answers[question.id] do |answer_f| %>
           <% if question.choices.empty? %>
             <%= answer_f.text_area :text, :class => "span12", rows: 5 %>

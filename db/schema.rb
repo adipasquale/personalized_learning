@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121213101208) do
+ActiveRecord::Schema.define(:version => 20121214032425) do
 
   create_table "answers", :force => true do |t|
     t.integer  "user_id"
@@ -72,9 +72,10 @@ ActiveRecord::Schema.define(:version => 20121213101208) do
   create_table "tasks", :force => true do |t|
     t.string   "name"
     t.text     "material"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
     t.integer  "step_id"
+    t.boolean  "is_finalized"
   end
 
   create_table "traits", :force => true do |t|

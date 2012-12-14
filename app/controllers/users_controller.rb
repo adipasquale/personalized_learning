@@ -60,8 +60,7 @@ class UsersController < ApplicationController
 
   def move_to_next_step
     @user = User.find params[:id]
-    next_step = Step.where("sequence_order > ?", @user.step.sequence_order).first
-    if !next_step.nil? and @user.update_attributes(step_id: next_step.id)
+    if !@user.next_step.nil? and @user.update_attributes(step_id: @user.next_step.id)
       flash[:success] = "Successfully moved to next step !"
       sign_in @user
     end

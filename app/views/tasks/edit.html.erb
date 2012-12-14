@@ -9,6 +9,9 @@
   <%= f.label :step_id %>
   <%= f.collection_select :step_id, Step.all, :id, :name %>
 
+  <%= f.label :is_finalized %>
+  <%= f.check_box :is_finalized %>
+
   <div class="row-fluid">
     <div class="span6">
       <%= f.label :material %>

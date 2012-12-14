@@ -1,5 +1,5 @@
 class Task < CustomizableItem
-  attr_accessible :material, :name, :step_id, :questions_attributes
+  attr_accessible :material, :name, :step_id, :is_finalized, :questions_attributes
 
   validates :name, presence: true
   validates :material, presence: true

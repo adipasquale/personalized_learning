@@ -40,7 +40,12 @@
     <ul>
       <% @tasks.each do |task| %>
         <li><i class="icon-align-center"></i>
-          <a href="<%= task_path(task) %>"><%= task.name %> <i class="icon-eye-open"></i></a>
+          <%= "[#{task.step.name}]" if !task.step.nil? %>
+          <a href="<%= task_path(task) %>">
+            <%= task.name %>
+            <%= "✓" if task.is_finalized? %>
+            <i class="icon-eye-open"></i>
+          </a>
           <a href="<%= edit_task_path(task) %>"><i class="icon-edit"></i></a>
           <a href="<%= task_path(task) %>" data-confirm="You sure 100% ?"
             data-method="delete" rel="nofollow"><i class="icon-remove"></i></a>
