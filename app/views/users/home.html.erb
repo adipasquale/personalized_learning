@@ -8,13 +8,15 @@
         For now on, you only have to fill up your profile :
         <%= link_to "here", edit_traits_user_path(current_user) %> <br />
         That's it !<br /></br />
-      <% elsif !current_user.next_step.nil? %>
+      <% end %>
+
+      <% if !current_user.next_step.nil? %>
         You have finished this step, congratulations !
         <span class="pull-right">
           Please confirm with us and click there :
           <%= link_to("Next Step", move_to_next_step_user_path(current_user), "class" => "btn btn-large btn-primary" ) %>
         </span>
-      <% else %>
+      <% elsif current_user.step.sequence_order > 1 %>
         You have finished the experiment ! thank you for participating :)
       <% end %>
 
