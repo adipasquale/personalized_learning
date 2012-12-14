@@ -44,3 +44,10 @@ multiple choice trait like 'passion' => 'music', 'dancing' ...
 
 Users should be presented with either a customized or classical material, depending on the admin choice (we need a control group).
 We also have to account for the different steps of the experiment : pre-test, practice, test, post-test ...
+
+## Retrieve Prod DB to local
+```
+heroku pgbackups:capture
+curl -o latest.dump `heroku pgbackups:url`
+pg_restore --verbose --clean --no-acl --no-owner -h localhost -U adipasquale -d pl_development latest.dump
+```

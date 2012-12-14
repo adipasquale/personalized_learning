@@ -16,6 +16,10 @@ class UserTrait < ActiveRecord::Base
     option.nil? ? value : option.value
   end
 
+  def self.ordered_name
+    UserTrait.find(:all, :joins => :trait, :order => 'traits.name')
+  end
+
   private
 
     def has_option_or_value
