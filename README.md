@@ -27,7 +27,7 @@ experiment.
 
 ### Users
 
-`Users` are only identified via their login (no password required). 
+`Users` are only identified via their login (no password required).
 Security is not a matter at all for our application, since it is used locally only.
 
 Each `User` is associated to a current `Step`, which in turn defines the subset of
@@ -40,14 +40,14 @@ is defined by an attribute in the `User` class. It is only accessible to admin u
 
 A `Task` designates an exercise similar to TOEIC part 7 type exercises.
 It contains a _material_, which is an annotated HTML text. The annotations
-are called `Intron`, and look like this : `$captain_name$`. They designate 
+are called `Exon`, and look like this : `$captain_name$`. They designate
 the parts of a text that can be customized.
 
 ### Questions
 
-The `Questions` have a text (that can contain `Introns`), and a few `Choices` associated (which themselves can
-contain `Introns`).
-The link between these `Introns` is made via the parent `Task`, which prevents local duplication.
+The `Questions` have a text (that can contain `Exons`), and a few `Choices` associated (which themselves can
+contain `Exons`).
+The link between these `Exons` is made via the parent `Task`, which prevents local duplication.
 
 ### Profile Traits
 
