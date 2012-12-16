@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121214032425) do
+ActiveRecord::Schema.define(:version => 20121216111534) do
 
   create_table "answers", :force => true do |t|
     t.integer  "user_id"
@@ -31,7 +31,7 @@ ActiveRecord::Schema.define(:version => 20121214032425) do
     t.string   "label"
   end
 
-  create_table "introns", :force => true do |t|
+  create_table "exons", :force => true do |t|
     t.string   "slug"
     t.integer  "trait_id"
     t.integer  "task_id"
@@ -107,7 +107,7 @@ ActiveRecord::Schema.define(:version => 20121214032425) do
 
   create_table "variations", :force => true do |t|
     t.string   "content"
-    t.integer  "intron_id"
+    t.integer  "exon_id"
     t.integer  "option_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false

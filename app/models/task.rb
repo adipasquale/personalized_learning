@@ -9,8 +9,8 @@ class Task < CustomizableItem
 
   belongs_to :step
 
-  has_many :introns, dependent: :destroy
-  accepts_nested_attributes_for :introns, :allow_destroy => true
+  has_many :exons, dependent: :destroy
+  accepts_nested_attributes_for :exons, :allow_destroy => true
 
   def personalizable_content
     material

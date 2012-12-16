@@ -9,15 +9,15 @@ class Question < CustomizableItem
 
   accepts_nested_attributes_for :choices, :reject_if => lambda { |c| c[:text].blank? }, :allow_destroy => true
 
-  has_many :introns, dependent: :destroy
-  accepts_nested_attributes_for :introns, :allow_destroy => true
+  has_many :exons, dependent: :destroy
+  accepts_nested_attributes_for :exons, :allow_destroy => true
 
   has_many :answers, dependent: :destroy
 
-  delegate :introns, to: :task
+  delegate :exons, to: :task
 
-  def has_any_nested_introns?
-    !introns.empty? or choices.any? { |c| !c.introns.empty? }
+  def has_any_nested_exons?
+    !exons.empty? or choices.any? { |c| !c.exons.empty? }
   end
 
   def personalizable_content

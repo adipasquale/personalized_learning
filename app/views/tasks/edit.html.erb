@@ -23,15 +23,15 @@
     </div>
   </div>
 
-  <fieldset id="introns">
+  <fieldset id="exons">
     <legend>Personalizable parts</legend>
 
     <div class="row-fluid">
 
-      <div class="span6 introns_container">
-        <div id="introns_from_task">
-          <%= f.fields_for :introns do |intron_f| %>
-            <%= render partial: "intron_fields", locals: { form_builder: intron_f } %>
+      <div class="span6 exons_container">
+        <div id="exons_from_task">
+          <%= f.fields_for :exons do |exon_f| %>
+            <%= render partial: "exon_fields", locals: { form_builder: exon_f } %>
           <% end %>
         </div>
       </div>
@@ -65,8 +65,8 @@
 <% end %>
 
 
-  <!-- hidden introns containers -->
-  <div id="hidden_introns_from_task" class="hide"></div>
+  <!-- hidden exons containers -->
+  <div id="hidden_exons_from_task" class="hide"></div>
 
   <div class="hide">
     <select id="prop_traits">

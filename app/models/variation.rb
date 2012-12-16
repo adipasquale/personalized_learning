@@ -1,7 +1,7 @@
 class Variation < ActiveRecord::Base
-  attr_accessible :content, :intron_id, :option_id
+  attr_accessible :content, :exon_id, :option_id
 
-  belongs_to :intron
+  belongs_to :exon
   belongs_to :option
 
   def get_content
