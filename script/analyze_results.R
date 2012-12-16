@@ -3,6 +3,7 @@ answers <- read.csv(file="answers.csv")
 
 # remove test (and anmin) users
 answers <- answers[answers$user_login != "testuser",]
+answers <- answers[answers$user_login != "testuser1",]
 
 # compute means for control and test group for each step
 means <- aggregate(answers$correct, by = list(material_type = answers$material_type, step_order = answers$step_order), mean)
