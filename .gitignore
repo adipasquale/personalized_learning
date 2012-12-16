@@ -14,4 +14,7 @@
 /log/*.log
 /tmp
 
-latest.dump
+
+/script/answers.csv
+/doc/experiment_report.*
+*.dump

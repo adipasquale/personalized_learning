@@ -13,6 +13,7 @@ PersonalizedLearning::Application.routes.draw do
   resources :tasks
   resources :traits, only: [:new, :edit, :update, :create, :destroy]
   resources :questionnaires
+  match "/answers", to: "answers#for_tasks"
 
   root :to => 'sessions#new'
 
