@@ -25,27 +25,37 @@ experiment.
 
 ![UML Diagram](https://www.lucidchart.com/publicSegments/view/50c96911-3410-4303-8d47-3d0d0a7c4e7c/image.png)
 
-### Tasks
+### Users
 
-A Task designates an exercise close to TOEIC part 7 type exercises.
+`Users` are only identified via their login (no password required). 
+Security is not a matter at all for our application, since it is used locally only.
 
-* a pattern material, which is an annotated HTML text. The annotations indicate
-the parts that can be customized.
-* a list of annotations
-* a list of questions and their answer choices
+Each `User` is associated to a current `Step`, which in turn defines the subset of
+`Tasks` / `Questionnaires` they have to perform.
+
+`Users` should be presented with either a customized or classical material, which
+is defined by an attribute in the `User` class. It is only accessible to admin users.
+
+### Tasks / Questionnaires
+
+A `Task` designates an exercise similar to TOEIC part 7 type exercises.
+It contains a _material_, which is an annotated HTML text. The annotations
+are called `Intron`, and look like this : `$captain_name$`. They designate 
+the parts of a text that can be customized.
+
+### Questions
+
+The `Questions` have a text (that can contain `Introns`), and a few `Choices` associated (which themselves can
+contain `Introns`).
+The link between these `Introns` is made via the parent `Task`, which prevents local duplication.
 
 ### Profile Traits
 
-A Trait is a piece of information describing a User.
-They can be either an open text trait like 'name', 'age' ... or a
-multiple choice trait like 'passion' => 'music', 'dancing' ...
+A `Trait` is a piece of information describing a `User`.
+There are both open text traits like 'name', 'age' ... and
+multiple choice traits like 'passion' => ['music', 'dance', 'astronomy']
 
-### Misc
-
-Users should be presented with either a customized or classical material, depending on the admin choice (we need a control group).
-We also have to account for the different steps of the experiment : pre-test, practice, test, post-test ...
-
-## Retrieve Prod DB to local
+## Retrieve production DB to local environment
 ```
 heroku pgbackups:capture
 curl -o latest.dump `heroku pgbackups:url`
