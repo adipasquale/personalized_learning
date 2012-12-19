@@ -15,6 +15,7 @@
 /tmp
 
 
-/script/answers.csv
+/script/*.csv
+/script/*.png
 /doc/experiment_report.*
 *.dump

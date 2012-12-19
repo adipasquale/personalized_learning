@@ -10,4 +10,12 @@ class AnswersController < ApplicationController
     end
   end
 
+  def for_questionnaires
+    # only answers for questionnaires questions
+    @answers = Answer.joins(:question).where("questions.questionnaire_id IS NOT NULL")
+    respond_to do |format|
+      format.csv { render text: @answers.to_csv }
+    end
+  end
+
 end

@@ -75,6 +75,14 @@
 
 <div class="row-fluid admin-page">
   <div class="span12">
-    Download the <%= link_to "answers", "/answers.csv" %> in CSV format.
+    Download answers in CSV format :
+    <ul>
+      <li>
+        <%= link_to "from all tasks", "/answers_for_tasks.csv" %>
+      </li>
+      <li>
+        <%= link_to "from all questionnaires", "/answers_for_questionnaires.csv" %>
+      </li>
+    </ul>
   </div>
 </div>

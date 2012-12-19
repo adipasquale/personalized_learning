@@ -12,14 +12,15 @@ class Answer < ActiveRecord::Base
 
   def self.to_csv
     CSV.generate do |csv|
-      csv << column_names + ["correct", "task_id", "task_name",
+      csv << column_names + ["question_text", "correct", "task_id", "questionnaire_id", "task_name",
         "step_name", "step_order",
         "user_login", "material_type"]
       all.each do |answer|
-        task = answer.question.task
+        step = answer.question.task.nil? ? answer.question.questionnaire.step : answer.question.task.step
         csv << answer.attributes.values_at(*column_names) +
-          [answer.choice.right? ? 1 : 0, task.id, task.name,
-            task.step.name, task.step.sequence_order,
+          [ answer.question.text, answer.choice ? (answer.choice.right? ? 1 : 0) : nil,
+            answer.question.task_id, answer.question.questionnaire_id,
+            step.name, step.sequence_order,
             answer.user.login, answer.user.material_type ]
       end
     end
