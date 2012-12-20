@@ -61,3 +61,13 @@ heroku pgbackups:capture
 curl -o latest.dump `heroku pgbackups:url`
 pg_restore --verbose --clean --no-acl --no-owner -h localhost -U adipasquale -d pl_development latest.dump
 ```
+
+## Retreive questionnaires choices (not implemented in backend)
+```ruby
+CSV.open("script/answers_choices.csv", "wb") do |csv|
+  csv << ["user_login", "material_type", "text", "choice", "choice_label"]
+  answers.map {|a| [a.user.login, a.user.material_type, a.question.text, a.choice.text, a.choice.label]}.each do |a|
+    csv << a
+  end
+end
+```

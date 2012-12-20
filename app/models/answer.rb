@@ -12,7 +12,7 @@ class Answer < ActiveRecord::Base
 
   def self.to_csv
     CSV.generate do |csv|
-      csv << column_names + ["question_text", "correct", "task_id", "questionnaire_id", "task_name",
+      csv << column_names + ["question_text", "correct", "task_id", "questionnaire_id",
         "step_name", "step_order",
         "user_login", "material_type"]
       all.each do |answer|
